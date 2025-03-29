@@ -29,6 +29,10 @@ export default function Index() {
         <Link href="/register" style={styles.link}>
           Register
         </Link>
+
+        <Link href="/documents" style={styles.link}>
+          Documents
+        </Link>
       </SafeAreaView>
     </SafeAreaProvider>
   );

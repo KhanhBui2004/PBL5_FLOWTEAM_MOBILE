@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import tw from "tailwind-react-native-classnames";
 import { useRouter } from "expo-router";
+import { registerUser } from "@/services/AuthService";
 
 const RegisterScreen = () => {
   const router = useRouter();
@@ -10,6 +11,14 @@ const RegisterScreen = () => {
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
 
+  const handleRegister = async () => {
+    console.log("Register:", { username, email, password });
+    const response = await registerUser(username, email, password);
+    if (response) {
+      console.log("Register successful:", response);
+      router.push("/login");
+    }
+  };
   return (
     <View style={tw`flex-1 justify-center items-center bg-gray-100`}>
       <View style={tw`w-11/12 bg-white p-6 rounded-lg shadow-lg`}>
@@ -63,7 +72,10 @@ const RegisterScreen = () => {
         </View>
 
         {/* Sign Up Button */}
-        <TouchableOpacity style={tw`bg-blue-500 p-3 rounded-md mt-3`}>
+        <TouchableOpacity
+          style={tw`bg-blue-500 p-3 rounded-md mt-3`}
+          onPress={handleRegister}
+        >
           <Text style={tw`text-white text-center font-bold text-lg`}>
             Sign Up
           </Text>
