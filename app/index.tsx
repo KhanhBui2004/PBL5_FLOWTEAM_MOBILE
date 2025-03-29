@@ -15,6 +15,7 @@ export default function Index() {
       >
         {/* <Statusbar></Statusbar> */}
         <Text>Edit app/index.tsx to edit this screen.</Text>
+        <Text>Open up app/index.tsx to start working on your app!</Text>
 
         <Link href="/home" style={styles.link}>
           bấm
