@@ -3,14 +3,20 @@ import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { Svg, Path } from "react-native-svg";
 import tw from "tailwind-react-native-classnames";
 import { useRouter } from "expo-router";
+import { loginUser } from "../../services/AuthService"; // Adjust the import path as necessary
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     console.log("Login:", { email, password });
+    const response = await loginUser(email, password);
+    if (response) {
+      console.log("Login successful:", response);
+      router.push("/home");
+    }
   };
 
   return (
