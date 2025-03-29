@@ -19,7 +19,15 @@ export default function Index() {
         <Text>Open up app/index.tsx to start working on your app!</Text>
 
         <Link href="/home" style={styles.link}>
-          bấm
+          Home
+        </Link>
+
+        <Link href="/login" style={styles.link}>
+          Login
+        </Link>
+
+        <Link href="/register" style={styles.link}>
+          Register
         </Link>
       </SafeAreaView>
     </SafeAreaProvider>
