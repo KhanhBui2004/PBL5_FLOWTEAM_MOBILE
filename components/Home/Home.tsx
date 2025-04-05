@@ -8,6 +8,7 @@ import {
   FlatList,
 } from "react-native";
 import { useVideoPlayer, VideoView } from "expo-video";
+import { Video } from "expo-av";
 import tw from "tailwind-react-native-classnames";
 import { FontAwesome } from "@expo/vector-icons";
 import { useRouter } from "expo-router";

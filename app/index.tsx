@@ -33,6 +33,10 @@ export default function Index() {
         <Link href="/documents" style={styles.link}>
           Documents
         </Link>
+
+        <Link href="/user" style={styles.link}>
+          User
+        </Link>
       </SafeAreaView>
     </SafeAreaProvider>
   );

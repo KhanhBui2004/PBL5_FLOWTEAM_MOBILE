@@ -8,6 +8,7 @@ export default function RootLayout() {
       <Stack.Screen name="login" options={{ title: "Đăng nhập" }} />
       <Stack.Screen name="register" options={{ title: "Đăng kí" }} />
       <Stack.Screen name="documents" options={{ title: "Documents" }} />
+      <Stack.Screen name="user" options={{ title: "Profile" }} />
     </Stack>
   );
 }
