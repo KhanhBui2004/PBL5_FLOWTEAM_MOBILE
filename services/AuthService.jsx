@@ -85,7 +85,7 @@ export const registerUser = async (name, email, password) => {
 
 export const getUser = async (id) => {
   try {
-    const response = await API.get(`/projects/users/${id}`);
+    const response = await API.get(`/users/${id}`);
     if (response.status === 200 && response.data?.user) {
       return {
         success: true,
@@ -106,24 +106,62 @@ export const getUser = async (id) => {
   }
 };
 
-export const getAllProjects = async () => {
+export const getProjectsById = async (id) => {
   try {
-    const response = await API.get("/Projects");
-    return response.data; // Trả về dữ liệu dự án
+    const response = await API.get(`/projects/user/${id}`);
+    console.log(response);
+    if (response.status === 200 && response.data?.projects) {
+      return {
+        success: true,
+        projects: response.data.projects,
+      };
+    } else {
+      console.log("get projects error!");
+      return {
+        success: false,
+      };
+    }
   } catch (error) {
     console.error("Lỗi khi lấy danh sách dự án:", error);
-    throw error; // Ném lỗi để xử lý ở nơi gọi
+    return {
+      success: false,
+      error: error.message || "Đã xảy ra lỗi khi lấy dữ liệu",
+    };
   }
 };
 
-export const getProjectsById = async (id) => {
+export const getDeletedProjectsByUser = async (id) => {
   try {
-    const response = await API.get(`/user/${id}`);
+    const response = await API.get(`/projects/trash/${id}`);
     console.log(response);
-    if (response.status === 200 && response.projects) {
+    if (response.status === 200 && response.data?.projects) {
       return {
         success: true,
-        projects: response.project,
+        projects: response.data.projects,
+      };
+    } else {
+      console.log("get projects error!");
+      return {
+        success: false,
+      };
+    }
+  } catch (error) {
+    console.error("Lỗi khi lấy danh sách dự án:", error);
+    return {
+      success: false,
+      error: error.message || "Đã xảy ra lỗi khi lấy dữ liệu",
+    };
+  }
+};
+
+export const getProjectsByUser = async (id) => {
+  try {
+    const response = await API.get(`/projects/owner/${id}`);
+    console.log("Service: ", response);
+    if (response.status === 200 && response.data?.projects) {
+      return {
+        success: true,
+        projects: response.data.projects,
       };
     } else {
       console.log("get projects error!");

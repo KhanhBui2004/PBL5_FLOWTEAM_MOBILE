@@ -4,10 +4,10 @@ export default function RootLayout() {
   return (
     <Stack screenOptions={{ headerShown: false }}>
       {/* <Stack.Screen name="index" options={{ title: "Trang index" }} /> */}
-      <Stack.Screen
+      {/* <Stack.Screen
         name="index"
         options={{ title: "Trang chủ", headerShown: false }}
-      />
+      /> */}
       <Stack.Screen
         name="MyDocuments"
         options={{ title: "My Documents", headerShown: false }}
