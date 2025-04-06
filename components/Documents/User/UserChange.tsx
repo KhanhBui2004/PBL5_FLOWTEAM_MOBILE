@@ -9,19 +9,14 @@ import {
 import React, { useContext, useEffect, useState } from "react";
 import { ScrollView } from "react-native";
 import tw from "tailwind-react-native-classnames";
-import { getUser } from "@/services/AuthService";
-import { UserContext } from "D:/PBL5/PBL5_FLOW_TEAMS_MOBILE/context/UserContext";
+import { changePasswordAPI, getUser } from "@/services/AuthService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import UserSetting from "./UserSetting";
 
-const Userchange = () => {
+const Userchange = ({ onSendData }) => {
   const [user, setUser] = useState(null);
-  // const { userId } = useContext(UserContext);
-
-  // useEffect(() => {
-  //   if (userId) {
-  //     fetchUser(userId);
-  //   }
-  // }, [userId]);
+  const [oldPassword, setOldPassword] = useState("");
+  const [password, setPassword] = useState("");
 
   const getId = async () => {
     try {
@@ -61,6 +56,38 @@ const Userchange = () => {
       ]
     );
   };
+
+  useEffect(() => {
+    onSendData(user);
+  }, [user]);
+
+  const changePassword = async () => {
+    if (oldPassword === "" || password === "") {
+      // Kiểm tra nếu trường mật khẩu cũ hoặc mới trống
+      Alert.alert("Thông báo", "Vui lòng nhập đầy đủ thông tin!");
+      return;
+    }
+    if (oldPassword === password) {
+      // Kiểm tra nếu mật khẩu cũ và mới giống nhau
+      Alert.alert("Thông báo", "Mật khẩu mới không được giống mật khẩu cũ!");
+      return;
+    }
+    // Gọi API để thay đổi mật khẩu ở đây
+    const response = await changePasswordAPI(user._id, {
+      oldPassword: oldPassword,
+      newPassword: password,
+    });
+    if (response.success) {
+      Alert.alert("Thông báo", "Đổi mật khẩu thành công!");
+      console.log("Đổi mật khẩu thành công!");
+      setOldPassword(""); // Reset trường mật khẩu cũ
+      setPassword(""); // Reset trường mật khẩu cũ
+    } else {
+      Alert.alert("Thông báo", "Đổi mật khẩu thất bại!");
+      console.log("Đổi mật khẩu thất bại!");
+    }
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView style={tw`z-0`} contentContainerStyle={{ flexGrow: 1 }}>
@@ -70,19 +97,25 @@ const Userchange = () => {
           {user && (
             <>
               <Text style={styles.text}>Username</Text>
-              <TextInput style={styles.inputText} value={user.name} />
+              <TextInput
+                style={styles.inputText}
+                value={user.name}
+                onChange={(e) => {
+                  setUser({ ...user, name: e.nativeEvent.text });
+                }}
+              />
               <Text style={styles.text}>Email</Text>
               <TextInput
                 style={styles.inputText}
                 value={user.email}
                 keyboardType="email-address"
               />
-              <Text style={styles.text}>Current password</Text>
+              {/* <Text style={styles.text}>Current password</Text>
               <TextInput
                 style={styles.inputText}
                 value={user.password}
                 secureTextEntry
-              />
+              /> */}
             </>
           )}
         </View>
@@ -99,11 +132,42 @@ const Userchange = () => {
             </TouchableOpacity>
           </View>
           <Text style={styles.text}>Current password</Text>
-          <TextInput style={styles.inputText} secureTextEntry />
+          <TextInput
+            style={styles.inputText}
+            value={oldPassword}
+            onChange={(e) => {
+              setOldPassword(e.nativeEvent.text);
+            }}
+          />
           <Text style={styles.text}>New password</Text>
-          <TextInput style={styles.inputText} secureTextEntry />
-          <Text style={styles.text}>Repeat new password</Text>
-          <TextInput style={styles.inputText} secureTextEntry />
+          <TextInput
+            style={styles.inputText}
+            value={password}
+            onChange={(e) => {
+              setPassword(e.nativeEvent.text);
+            }}
+          />
+          {/* <Text style={styles.text}>Repeat new password</Text>
+          <TextInput style={styles.inputText} secureTextEntry /> */}
+          <TouchableOpacity
+            style={{
+              borderColor: "black",
+              backgroundColor: "blue",
+              borderRadius: 10,
+              padding: 10,
+              marginRight: 30,
+              marginTop: 10,
+              maxWidth: 160,
+              alignSelf: "flex-end",
+              flexDirection: "row",
+              justifyContent: "center",
+            }}
+            onPress={changePassword}
+          >
+            <Text style={{ fontSize: 17, color: "white" }}>
+              Change Password
+            </Text>
+          </TouchableOpacity>
         </View>
         <View style={styles.separator} /> {/* Đường kẻ */}
         <View>

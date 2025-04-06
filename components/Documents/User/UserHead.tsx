@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { FiCamera } from "react-icons/fi";
 import { launchImageLibrary } from "react-native-image-picker";
 import Icon from "react-native-vector-icons/Feather";
-import { UserContext } from "D:/PBL5/PBL5_FLOW_TEAMS_MOBILE/context/UserContext";
+// import { UserContext } from "D:/PBL5/PBL5_FLOW_TEAMS_MOBILE/context/UserContext";
 import { getUser } from "@/services/AuthService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -21,16 +21,17 @@ const User: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await getUser(getId()); // thay bằng id thực tế
-      if (result.success) {
-        setUser(result.user);
-      } else {
-        console.log("Lỗi:", result.error);
-      }
-    };
+  const fetchData = async () => {
+    const Id = await getId();
+    const result = await getUser(Id); // thay bằng id thực tế
+    if (result.success) {
+      setUser(result.user);
+    } else {
+      console.log("Lỗi:", result.error);
+    }
+  };
 
+  useEffect(() => {
     fetchData();
   }, []);
 
@@ -45,7 +46,7 @@ const User: React.FC = () => {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.avatarWrapper} onPress={handleFileChange}>
-        {avatar ? (
+        {user && user.avatar ? (
           <Image source={{ uri: user.avatar }} style={styles.avatar} />
         ) : (
           <Text style={styles.avatarText}>US</Text>
@@ -57,10 +58,17 @@ const User: React.FC = () => {
           <Text style={styles.uploadText}>Upload</Text>
         </TouchableOpacity>
       </TouchableOpacity>
-      <View style={{ margin: 20, width: 250 }}>
-        <Text style={{ fontWeight: "bold", fontSize: 22 }}>User</Text>
-        <Text style={{ fontSize: 15 }}>example@gmail.com</Text>
-      </View>
+      {user ? (
+        <View style={{ margin: 20, width: 250 }}>
+          <Text style={{ fontWeight: "bold", fontSize: 22 }}>{user.name}</Text>
+          <Text style={{ fontSize: 15 }}>{user.email}</Text>
+        </View>
+      ) : (
+        <View style={{ margin: 20, width: 250 }}>
+          <Text style={{ fontWeight: "bold", fontSize: 22 }}>User</Text>
+          <Text style={{ fontSize: 15 }}>example@gmail.com</Text>
+        </View>
+      )}
     </View>
   );
 };

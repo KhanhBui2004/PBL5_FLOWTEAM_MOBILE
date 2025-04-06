@@ -177,3 +177,48 @@ export const getProjectsByUser = async (id) => {
     };
   }
 };
+
+export const updateUser = async (id, user) => {
+  try {
+    const response = await API.put(`/users/${id}`, user);
+    if (response.status === 200) {
+      return {
+        success: true,
+      };
+    } else {
+      console.log("get projects error!");
+      return {
+        success: false,
+      };
+    }
+  } catch (error) {
+    console.error("Lỗi khi lấy danh sách dự án:", error);
+    return {
+      success: false,
+      error: error.message || "Đã xảy ra lỗi khi lấy dữ liệu",
+    };
+  }
+};
+
+export const changePasswordAPI = async (id, data) => {
+  try {
+    const response = await API.post(`/users/change-password/${id}`, data);
+    if (response.status === 200) {
+      return {
+        success: true,
+        data: response.data,
+      };
+    } else {
+      console.log("get projects error!");
+      return {
+        success: false,
+      };
+    }
+  } catch (error) {
+    console.error("Lỗi khi lấy danh sách dự án:", error);
+    return {
+      success: false,
+      error: error.message || "Đã xảy ra lỗi khi lấy dữ liệu",
+    };
+  }
+};
