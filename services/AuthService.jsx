@@ -85,7 +85,7 @@ export const registerUser = async (name, email, password) => {
 
 export const getUser = async (id) => {
   try {
-    const response = await API.get(`/users/${id}`);
+    const response = await API.get(`/projects/users/${id}`);
     if (response.status === 200 && response.data?.user) {
       return {
         success: true,
@@ -118,12 +118,12 @@ export const getAllProjects = async () => {
 
 export const getProjectsById = async (id) => {
   try {
-    const response = await API.get(`/Projects/${id}`);
+    const response = await API.get(`/user/${id}`);
     console.log(response);
-    if (response.status === 200 && response.data?.projects) {
+    if (response.status === 200 && response.projects) {
       return {
         success: true,
-        projects: response.data.project,
+        projects: response.project,
       };
     } else {
       console.log("get projects error!");

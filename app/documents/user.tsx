@@ -8,27 +8,27 @@ import DocNavbar from "@/components/Documents/DocNavbar";
 
 const UserProfile = () => {
   return (
-    <View style={{ flex: 1 }}>
-      <UserHead />
-      <View style={styles.separator} /> {/* Đường kẻ */}
-      <UserSetting />
-      <View style={styles.separator} /> {/* Đường kẻ */}
-      <UserChange />
-    </View>
     // <View style={{ flex: 1 }}>
-    //   <View style={tw`bg-gray-100 min-h-full`}>
-    //     <View style={tw`z-10`}>
-    //       <DocNavbar />
-    //     </View>
-    //     <View style={{ flex: 1 }}>
-    //       <UserHead />
-    //       <View style={styles.separator} /> {/* Đường kẻ */}
-    //       <UserSetting />
-    //       <View style={styles.separator} /> {/* Đường kẻ */}
-    //       <UserChange />
-    //     </View>
-    //   </View>
+    //   <UserHead />
+    //   <View style={styles.separator} /> {/* Đường kẻ */}
+    //   <UserSetting />
+    //   <View style={styles.separator} /> {/* Đường kẻ */}
+    //   <UserChange />
     // </View>
+    <View style={{ flex: 1 }}>
+      <View style={tw`bg-gray-100 min-h-full`}>
+        <View style={tw`z-10`}>
+          <DocNavbar />
+        </View>
+        <View>
+          <UserHead />
+          <View style={styles.separator} /> {/* Đường kẻ */}
+          <UserSetting />
+          <View style={styles.separator} /> {/* Đường kẻ */}
+          <UserChange />
+        </View>
+      </View>
+    </View>
   );
 };
 
