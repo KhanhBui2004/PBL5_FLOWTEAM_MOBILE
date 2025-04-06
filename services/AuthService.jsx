@@ -106,24 +106,14 @@ export const getUser = async (id) => {
   }
 };
 
-export const getAllProjects = async () => {
-  try {
-    const response = await API.get("/Projects");
-    return response.data; // Trả về dữ liệu dự án
-  } catch (error) {
-    console.error("Lỗi khi lấy danh sách dự án:", error);
-    throw error; // Ném lỗi để xử lý ở nơi gọi
-  }
-};
-
 export const getProjectsById = async (id) => {
   try {
-    const response = await API.get(`/Projects/${id}`);
+    const response = await API.get(`/projects/user/${id}`);
     console.log(response);
     if (response.status === 200 && response.data?.projects) {
       return {
         success: true,
-        projects: response.data.project,
+        projects: response.data.projects,
       };
     } else {
       console.log("get projects error!");
@@ -143,6 +133,7 @@ export const getProjectsById = async (id) => {
 export const getDeletedProjectsByUser = async (id) => {
   try {
     const response = await API.get(`/projects/trash/${id}`);
+    console.log(response);
     if (response.status === 200 && response.data?.projects) {
       return {
         success: true,
@@ -166,6 +157,7 @@ export const getDeletedProjectsByUser = async (id) => {
 export const getProjectsByUser = async (id) => {
   try {
     const response = await API.get(`/projects/owner/${id}`);
+    console.log("Service: ", response);
     if (response.status === 200 && response.data?.projects) {
       return {
         success: true,
