@@ -2,6 +2,7 @@ import DocNavbar from "./DocNavbar";
 import DocHome from "./DocHome";
 import { ScrollView, View } from "react-native";
 import tw from "tailwind-react-native-classnames";
+
 const Documents = () => {
   return (
     <>
