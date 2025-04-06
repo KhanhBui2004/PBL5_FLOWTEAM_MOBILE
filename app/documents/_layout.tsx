@@ -5,22 +5,22 @@ export default function RootLayout() {
     <Stack screenOptions={{ headerShown: false }}>
       {/* <Stack.Screen name="index" options={{ title: "Trang index" }} /> */}
       <Stack.Screen
-        name="home"
+        name="index"
         options={{ title: "Trang chủ", headerShown: false }}
       />
       <Stack.Screen
-        name="login"
-        options={{ title: "Đăng nhập", headerShown: false }}
+        name="MyDocuments"
+        options={{ title: "My Documents", headerShown: false }}
       />
       <Stack.Screen
-        name="register"
-        options={{ title: "Đăng kí", headerShown: false }}
+        name="Trash"
+        options={{ title: "Thùng rác", headerShown: false }}
       />
       <Stack.Screen
-        name="documents"
-        options={{ title: "Documents", headerShown: false }}
+        name="Setting"
+        options={{ title: "Cài đặt", headerShown: false }}
       />
-      {/* <Stack.Screen name="user" options={{ title: "Profile" }} /> */}
+      <Stack.Screen name="user" options={{ title: "Profile" }} />
     </Stack>
   );
 }

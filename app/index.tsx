@@ -1,3 +1,4 @@
+import { UserProvider } from "@/context/UserContext";
 import { Link } from "expo-router";
 import { Text, View, Image, StyleSheet, StatusBar } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";

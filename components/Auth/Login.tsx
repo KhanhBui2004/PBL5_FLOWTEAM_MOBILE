@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { Svg, Path } from "react-native-svg";
 import tw from "tailwind-react-native-classnames";
 import { useRouter } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { UserContext } from "D:/PBL5/PBL5_FLOW_TEAMS_MOBILE/context/UserContext";
 import { loginUser } from "../../services/AuthService"; // Adjust the import path as necessary
 
 export default function LoginScreen() {
@@ -10,12 +12,37 @@ export default function LoginScreen() {
   const [password, setPassword] = useState("");
   const router = useRouter();
 
+  // const { setUserId } = useContext(UserContext);
+
+  const saveId = async (id) => {
+    try {
+      console.log(id);
+      await AsyncStorage.setItem("userId", id);
+    } catch (e) {
+      console.error("Lỗi khi lưu id:", e);
+    }
+  };
+
+  const saveToken = async (token) => {
+    try {
+      console.log(token);
+      await AsyncStorage.setItem("userToken", token);
+    } catch (e) {
+      console.error("Lỗi khi lưu id:", e);
+    }
+  };
+
   const handleLogin = async () => {
     console.log("Login:", { email, password });
     const response = await loginUser(email, password);
+    console.log(response);
+
     if (response) {
+      const { id, token } = response.user;
+      saveId(id);
+      saveToken(token);
       console.log("Login successful:", response);
-      router.push("/home");
+      router.push("/documents/");
     }
   };
 

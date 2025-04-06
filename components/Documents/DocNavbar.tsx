@@ -9,6 +9,7 @@ import {
 import tw from "tailwind-react-native-classnames";
 import { useState } from "react";
 import { FontAwesome } from "@expo/vector-icons";
+import { router, useRouter } from "expo-router";
 
 export default function DocNavbar() {
   const [isMenuVisible, setIsMenuVisible] = useState(false);
@@ -38,18 +39,21 @@ export default function DocNavbar() {
             >
               <TouchableOpacity
                 style={tw`flex flex-row justify-first items-center py-2 border-b border-gray-300`}
+                onPress={() => router.push("/documents/mydoc")}
               >
                 <FontAwesome name="folder" size={15} color="#000" />
                 <Text style={tw`text-gray-800 mx-2`}>My Documents</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={tw`flex flex-row justify-first items-center py-2 border-b border-gray-300`}
+                onPress={() => router.push("/documents/trash")}
               >
                 <FontAwesome name="trash" size={15} color="#000" />
                 <Text style={tw`text-gray-800 mx-2`}>Trash</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={tw`flex flex-row justify-first items-center py-2 border-b border-gray-300`}
+                onPress={() => router.push("/documents/user")}
               >
                 <FontAwesome name="user" size={15} color="#000" />
                 <Text style={tw`text-gray-800 mx-2`}>Profile</Text>

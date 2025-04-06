@@ -1,11 +1,38 @@
 import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FiCamera } from "react-icons/fi";
 import { launchImageLibrary } from "react-native-image-picker";
 import Icon from "react-native-vector-icons/Feather";
+import { UserContext } from "D:/PBL5/PBL5_FLOW_TEAMS_MOBILE/context/UserContext";
+import { getUser } from "@/services/AuthService";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const User: React.FC = () => {
   const [avatar, setAvatar] = useState<string | null>(null);
+  const [user, setUser] = useState(null);
+
+  const getId = async () => {
+    try {
+      const Id = await AsyncStorage.getItem("userId");
+      return Id;
+    } catch (e) {
+      console.error("Lỗi khi lấy Id:", e);
+      return null;
+    }
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await getUser(getId()); // thay bằng id thực tế
+      if (result.success) {
+        setUser(result.user);
+      } else {
+        console.log("Lỗi:", result.error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleFileChange = () => {
     launchImageLibrary({ mediaType: "photo", quality: 0.5 }, (response) => {
@@ -19,7 +46,7 @@ const User: React.FC = () => {
     <View style={styles.container}>
       <TouchableOpacity style={styles.avatarWrapper} onPress={handleFileChange}>
         {avatar ? (
-          <Image source={{ uri: avatar }} style={styles.avatar} />
+          <Image source={{ uri: user.avatar }} style={styles.avatar} />
         ) : (
           <Text style={styles.avatarText}>US</Text>
         )}
@@ -94,3 +121,6 @@ const styles = StyleSheet.create({
 });
 
 export default User;
+function fetchUser(userId: any) {
+  throw new Error("Function not implemented.");
+}

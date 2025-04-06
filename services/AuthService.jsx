@@ -82,3 +82,60 @@ export const registerUser = async (name, email, password) => {
     };
   }
 };
+
+export const getUser = async (id) => {
+  try {
+    const response = await API.get(`/users/${id}`);
+    if (response.status === 200 && response.data?.user) {
+      return {
+        success: true,
+        user: response.data.user,
+      };
+    } else {
+      console.log("get user error!");
+      return {
+        success: false,
+      };
+    }
+  } catch (error) {
+    console.error("Error fetching user:", error.message);
+    return {
+      success: false,
+      error: error.message,
+    };
+  }
+};
+
+export const getAllProjects = async () => {
+  try {
+    const response = await API.get("/Projects");
+    return response.data; // Trả về dữ liệu dự án
+  } catch (error) {
+    console.error("Lỗi khi lấy danh sách dự án:", error);
+    throw error; // Ném lỗi để xử lý ở nơi gọi
+  }
+};
+
+export const getProjectsById = async (id) => {
+  try {
+    const response = await API.get(`/Projects/${id}`);
+    console.log(response);
+    if (response.status === 200 && response.data?.projects) {
+      return {
+        success: true,
+        projects: response.data.project,
+      };
+    } else {
+      console.log("get projects error!");
+      return {
+        success: false,
+      };
+    }
+  } catch (error) {
+    console.error("Lỗi khi lấy danh sách dự án:", error);
+    return {
+      success: false,
+      error: error.message || "Đã xảy ra lỗi khi lấy dữ liệu",
+    };
+  }
+};
