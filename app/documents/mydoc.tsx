@@ -1,5 +1,5 @@
-import DocNavbar from "D:/PBL5/PBL5_FLOW_TEAMS_MOBILE/components/Documents/DocNavbar";
-import MyDoc from "D:/PBL5/PBL5_FLOW_TEAMS_MOBILE/components/Documents/MyDoc";
+import DocNavbar from "@/components/Documents/DocNavbar";
+import MyDoc from "@/components/Documents/MyDoc";
 import { ScrollView, View } from "react-native";
 import tw from "tailwind-react-native-classnames";
 const Documents = () => {

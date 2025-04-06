@@ -139,3 +139,26 @@ export const getProjectsById = async (id) => {
     };
   }
 };
+
+export const getDeletedProjectsByUser = async (id) => {
+  try {
+    const response = await API.get(`/projects/trash/${id}`);
+    if (response.status === 200 && response.data?.projects) {
+      return {
+        success: true,
+        projects: response.data.projects,
+      };
+    } else {
+      console.log("get projects error!");
+      return {
+        success: false,
+      };
+    }
+  } catch (error) {
+    console.error("Lỗi khi lấy danh sách dự án:", error);
+    return {
+      success: false,
+      error: error.message || "Đã xảy ra lỗi khi lấy dữ liệu",
+    };
+  }
+};

@@ -4,7 +4,7 @@ import { Svg, Path } from "react-native-svg";
 import tw from "tailwind-react-native-classnames";
 import { useRouter } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { UserContext } from "D:/PBL5/PBL5_FLOW_TEAMS_MOBILE/context/UserContext";
+
 import { loginUser } from "../../services/AuthService"; // Adjust the import path as necessary
 
 export default function LoginScreen() {
