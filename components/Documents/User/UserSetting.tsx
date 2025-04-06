@@ -1,11 +1,18 @@
 import { View, Text, Alert } from "react-native";
 import React from "react";
 import { TouchableOpacity } from "react-native";
+import { updateUser } from "@/services/AuthService";
 
-const UserSetting = () => {
-  const SaveInfor = () => {
-    Alert.alert("Thông báo", "Đã lưu lại thông tin của bạn!");
+const UserSetting = ({ user }) => {
+  const updateInfor = async () => {
+    const response = await updateUser(user._id, user);
+    if (response.success) {
+      console.log("Cập nhật thành công!");
+    } else {
+      console.log("Cập nhật thất bại!");
+    }
   };
+
   return (
     <View style={{ marginLeft: 20 }}>
       <Text style={{ fontSize: 25, fontWeight: "bold" }}>User Setting</Text>
@@ -27,7 +34,7 @@ const UserSetting = () => {
             flexDirection: "row",
             justifyContent: "center",
           }}
-          onPress={SaveInfor}
+          onPress={updateInfor}
         >
           <Text style={{ fontSize: 17, color: "white" }}>Save changes</Text>
         </TouchableOpacity>

@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import UserHead from "@/components/Documents/User/UserHead";
 import UserSetting from "@/components/Documents/User/UserSetting";
 import UserChange from "@/components/Documents/User/UserChange";
@@ -7,13 +7,19 @@ import tw from "tailwind-react-native-classnames";
 import DocNavbar from "@/components/Documents/DocNavbar";
 
 const UserProfile = () => {
+  const [userData, setUserData] = useState("");
+
+  const handleDataFromChild = (data) => {
+    setUserData(data);
+  };
+
   return (
     <View style={{ flex: 1 }}>
       <UserHead />
       <View style={styles.separator} /> {/* Đường kẻ */}
-      <UserSetting />
+      <UserSetting user={userData} />
       <View style={styles.separator} /> {/* Đường kẻ */}
-      <UserChange />
+      <UserChange onSendData={handleDataFromChild} />
     </View>
     // <View style={{ flex: 1 }}>
     //   <View style={tw`bg-gray-100 min-h-full`}>
