@@ -1,3 +1,4 @@
+import axios from "axios";
 import API from "../config/axios";
 
 export const loginUser = async (email, password) => {
@@ -220,5 +221,29 @@ export const changePasswordAPI = async (id, data) => {
       success: false,
       error: error.message || "Đã xảy ra lỗi khi lấy dữ liệu",
     };
+  }
+};
+
+export const uploadImage = async (file) => {
+  const formData = new FormData();
+
+  formData.append("avatar", {
+    uri: file.uri,
+    name: file.name || "avatar.jpg",
+    type: file.mimeType || "image/jpeg", // fallback nếu không có type
+  });
+
+  try {
+    const response = await API.post("/upload-avatar", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    console.log("Upload thành công:", response.data);
+    return response.data;
+  } catch (err) {
+    console.error("Lỗi khi upload:", err);
+    throw err;
   }
 };

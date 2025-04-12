@@ -42,21 +42,6 @@ const Userchange = ({ onSendData }) => {
     fetchData();
   }, []);
 
-  const DeleteAcc = () => {
-    Alert.alert(
-      "Thông báo",
-      "Bạn có chắc chắn muốn xóa tài khoản của mình không?",
-      [
-        { text: "Hủy", style: "cancel" },
-        {
-          text: "Xóa",
-          onPress: () =>
-            Alert.alert("Thông báo", "Tài khoản của bạn đã bị xóa!"),
-        },
-      ]
-    );
-  };
-
   useEffect(() => {
     onSendData(user);
   }, [user]);

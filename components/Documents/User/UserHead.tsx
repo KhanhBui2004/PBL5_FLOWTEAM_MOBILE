@@ -3,50 +3,64 @@ import React, { useContext, useEffect, useState } from "react";
 import { FiCamera } from "react-icons/fi";
 import { launchImageLibrary } from "react-native-image-picker";
 import Icon from "react-native-vector-icons/Feather";
-import { getUser } from "@/services/AuthService";
+import { getUser, uploadImage } from "@/services/AuthService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as ImagePicker from "expo-image-picker";
+import { Alert } from "react-native";
 
-const User: React.FC = () => {
-  const [avatar, setAvatar] = useState<string | null>(null);
-  const [user, setUser] = useState(null);
-
-  const getId = async () => {
-    try {
-      const Id = await AsyncStorage.getItem("userId");
-      return Id;
-    } catch (e) {
-      console.error("Lỗi khi lấy Id:", e);
-      return null;
-    }
-  };
-
-  const fetchData = async () => {
-    const Id = await getId();
-    const result = await getUser(Id); // thay bằng id thực tế
-    if (result.success) {
-      setUser(result.user);
-    } else {
-      console.log("Lỗi:", result.error);
-    }
-  };
+const User = ({ onSendData, user }) => {
+  const [localUser, setLocalUser] = useState(user);
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    setLocalUser(user);
+  }, [user]);
 
-  const handleFileChange = () => {
-    launchImageLibrary({ mediaType: "photo", quality: 0.5 }, (response) => {
-      if (response.assets && response.assets[0].uri) {
-        setAvatar(response.assets[0].uri); // Lưu URL ảnh
+  const pickImage = async () => {
+    try {
+      // Yêu cầu quyền truy cập ảnh
+      const permissionResult =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+      if (permissionResult.granted === false) {
+        Alert.alert("Permission Denied", "Bạn cần cấp quyền truy cập ảnh");
+        return;
       }
-    });
+
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        quality: 1,
+      });
+
+      if (!result.canceled) {
+        const image = result.assets[0]; // image.uri, image.fileName, etc.
+        const response = await uploadImage(image); // gọi hàm upload
+        if (response) {
+          const updatedUser = {
+            ...localUser,
+            avatar: response.file.filename, // ⚠️ tuỳ vào response từ server
+          };
+
+          setLocalUser(updatedUser); // 👈 cập nhật để giao diện render lại
+          onSendData(updatedUser); // 👈 gửi lên component cha
+        }
+      }
+    } catch (error) {
+      console.error("Lỗi khi chọn ảnh:", error);
+    }
   };
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.avatarWrapper} onPress={handleFileChange}>
-        {user && user.avatar ? (
-          <Image source={{ uri: user.avatar }} style={styles.avatar} />
+      <TouchableOpacity style={styles.avatarWrapper} onPress={pickImage}>
+        {localUser && localUser.avatar ? (
+          <Image
+            source={{
+              uri: "http://192.168.110.2:8000/imgs/avatars/" + localUser.avatar,
+            }}
+            style={styles.avatar}
+            resizeMode="cover"
+          />
         ) : (
           <Text style={styles.avatarText}>US</Text>
         )}
@@ -83,21 +97,17 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   avatarWrapper: {
-    backgroundColor: "#76ed84", // Màu nền xanh
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 50,
     width: 120,
     height: 120,
-    overflow: "hidden",
-    position: "relative",
-    marginLeft: 20,
+    borderRadius: "50%",
+    overflow: "hidden", // 👈 rất quan trọng để bo góc ảnh bên trong
+    backgroundColor: "#eee",
   },
   avatar: {
     width: "100%",
     height: "100%",
-    borderRadius: 50,
-    resizeMode: "cover",
+    // borderRadius: 50,
+    // backgroundColor: "transparent",
   },
   avatarText: {
     fontSize: 24,
