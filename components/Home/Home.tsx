@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -11,10 +11,12 @@ import { useVideoPlayer, VideoView } from "expo-video";
 import { Video } from "expo-av";
 import tw from "tailwind-react-native-classnames";
 import { FontAwesome } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
+import { router, useRouter } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useUser } from "@/context/UserContext";
 
 export default function Home() {
-  const router = useRouter();
+  const { token, logout } = useUser();
   const player = useVideoPlayer(
     "https://corporate-assets.lucid.co/chart/080af32f-35fa-4f39-b788-e90ea8100501.mp4",
     (player) => {
@@ -121,13 +123,38 @@ export default function Home() {
           resizeMode="contain"
         />
         <View style={tw`flex-1 flex-row justify-end items-center`}>
-          <TouchableOpacity
-            style={tw`px-4 py-2 bg-blue-600 rounded-lg flex-row items-center`}
-            onPress={() => router.push("/login")}
-          >
-            <FontAwesome name="sign-in" size={25} color="#fff" />
-            <Text style={tw`text-white ml-2`}>Log in</Text>
-          </TouchableOpacity>
+          {token ? (
+            <>
+              <TouchableOpacity
+                style={tw`mx-2 px-4 py-2 bg-blue-600 rounded-lg flex-row items-center`}
+                onPress={() => router.push("/documents")}
+              >
+                <FontAwesome name="folder" size={25} color="#fff" />
+                <Text style={tw`text-white ml-2`}>Document</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={tw`px-4 py-2 bg-blue-600 rounded-lg flex-row items-center`}
+                onPress={() => {
+                  console.log("Logout clicked");
+                  logout();
+                  window.location.reload();
+                }}
+              >
+                <FontAwesome name="sign-out" size={25} color="#fff" />
+                <Text style={tw`text-white ml-2`}>Log out</Text>
+              </TouchableOpacity>
+            </>
+          ) : (
+            <>
+              <TouchableOpacity
+                style={tw`px-4 py-2 bg-blue-600 rounded-lg flex-row items-center`}
+                onPress={() => router.push("/login")}
+              >
+                <FontAwesome name="sign-in" size={25} color="#fff" />
+                <Text style={tw`text-white ml-2`}>Log in</Text>
+              </TouchableOpacity>
+            </>
+          )}
         </View>
       </View>
 

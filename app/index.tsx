@@ -1,45 +1,48 @@
 import { UserProvider } from "@/context/UserContext";
-import { Link } from "expo-router";
+import { Link, Redirect, router } from "expo-router";
 import { Text, View, Image, StyleSheet, StatusBar } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import { WebView } from "react-native-webview";
+import HomePage from "./home";
+import { useEffect } from "react";
 
 export default function Index() {
   return (
-    <SafeAreaProvider>
-      <SafeAreaView
-        style={{
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        {/* <Statusbar></Statusbar> */}
-        <Text>Edit app/index.tsx to edit this screen.</Text>
+    // <SafeAreaProvider>
+    //   <SafeAreaView
+    //     style={{
+    //       flex: 1,
+    //       justifyContent: "center",
+    //       alignItems: "center",
+    //     }}
+    //   >
+    //     {/* <Statusbar></Statusbar> */}
+    //     <Text>Edit app/index.tsx to edit this screen.</Text>
 
-        <Text>Open up app/index.tsx to start working on your app!</Text>
+    //     <Text>Open up app/index.tsx to start working on your app!</Text>
 
-        <Link href="/home" style={styles.link}>
-          Home
-        </Link>
+    //     <Link href="/home" style={styles.link}>
+    //       Home
+    //     </Link>
 
-        <Link href="/login" style={styles.link}>
-          Login
-        </Link>
+    //     <Link href="/login" style={styles.link}>
+    //       Login
+    //     </Link>
 
-        <Link href="/register" style={styles.link}>
-          Register
-        </Link>
+    //     <Link href="/register" style={styles.link}>
+    //       Register
+    //     </Link>
 
-        <Link href="/documents" style={styles.link}>
-          Documents
-        </Link>
+    //     <Link href="/documents" style={styles.link}>
+    //       Documents
+    //     </Link>
 
-        <Link href="/user" style={styles.link}>
-          User
-        </Link>
-      </SafeAreaView>
-    </SafeAreaProvider>
+    //     <Link href="/user" style={styles.link}>
+    //       User
+    //     </Link>
+    //   </SafeAreaView>
+    // </SafeAreaProvider>
+    <Redirect href="/home" />
   );
 }
 
