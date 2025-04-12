@@ -6,7 +6,7 @@ import tw from "tailwind-react-native-classnames";
 const Documents = () => {
   return (
     <>
-      <View style={tw`bg-gray-100 min-h-full`}>
+      <View style={tw`bg-gray-100 min-h-full py-10`}>
         <View style={tw`z-10`}>
           <DocNavbar />
         </View>

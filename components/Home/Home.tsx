@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { CommonActions } from "@react-navigation/native";
 import {
   View,
   Text,
@@ -134,10 +135,15 @@ export default function Home() {
               </TouchableOpacity>
               <TouchableOpacity
                 style={tw`px-4 py-2 bg-blue-600 rounded-lg flex-row items-center`}
-                onPress={() => {
+                onPress={async () => {
                   console.log("Logout clicked");
                   logout();
-                  window.location.reload();
+                  // navigator.dispatch(
+                  //   CommonActions.reset({
+                  //     index: 0,
+                  //     routes: [{ name: 'TênMànHìnhHiệnTại' }],
+                  //   })
+                  // );
                 }}
               >
                 <FontAwesome name="sign-out" size={25} color="#fff" />

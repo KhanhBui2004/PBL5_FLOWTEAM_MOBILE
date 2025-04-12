@@ -19,10 +19,10 @@ export default function DocNavbar() {
   return (
     <>
       {/* Header */}
-      <View style={tw`flex flex-row items-center bg-white shadow px-6 py-2`}>
+      <View style={tw`flex flex-row items-center bg-white shadow px-6 py-3`}>
         <Image
           source={require("../../assets/images/FlowTeam.png")}
-          style={tw`h-20 w-20`}
+          style={{ height: 100, width: 100 }}
           resizeMode="contain"
         />
         <View style={tw`flex-1 flex-row justify-end items-center relative`}>

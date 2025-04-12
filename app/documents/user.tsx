@@ -34,7 +34,7 @@ const UserProfile = () => {
           <UserChange onSendData={handleDataFromChild} />
         </View>
       </View>
-    </>
+    </View>
   );
 };
 
