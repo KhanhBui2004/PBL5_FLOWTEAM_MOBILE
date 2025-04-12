@@ -2,7 +2,7 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const API = axios.create({
-  baseURL: "http://localhost:8000/api", // URL API của bạn
+  baseURL: "http://10.10.2.193:8000/api", // URL API của bạn
   timeout: 10000, // Timeout 10 giây
   headers: {
     "Content-Type": "application/json",

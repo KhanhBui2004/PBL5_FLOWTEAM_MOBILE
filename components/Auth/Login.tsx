@@ -7,7 +7,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { loginUser } from "../../services/AuthService"; // Adjust the import path as necessary
 
-export default function LoginScreen() {
+const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
@@ -127,4 +127,6 @@ export default function LoginScreen() {
       </View>
     </View>
   );
-}
+};
+
+export default LoginScreen;

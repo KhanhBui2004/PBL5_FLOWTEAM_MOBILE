@@ -11,7 +11,6 @@ import { ScrollView } from "react-native";
 import tw from "tailwind-react-native-classnames";
 import { changePasswordAPI, getUser } from "@/services/AuthService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import UserSetting from "./UserSetting";
 
 const Userchange = ({ onSendData }) => {
   const [user, setUser] = useState(null);
@@ -32,6 +31,7 @@ const Userchange = ({ onSendData }) => {
     const fetchData = async () => {
       const Id = await getId();
       const result = await getUser(Id); // thay bằng id thực tế
+
       if (result.success) {
         setUser(result.user);
       } else {
@@ -95,11 +95,11 @@ const Userchange = ({ onSendData }) => {
         <View>
           <Text style={styles.headText}>Account settings</Text>
           {user && (
-            <>
+            <View>
               <Text style={styles.text}>Username</Text>
               <TextInput
                 style={styles.inputText}
-                value={user.name}
+                value={user?.name || ""}
                 onChange={(e) => {
                   setUser({ ...user, name: e.nativeEvent.text });
                 }}
@@ -107,16 +107,10 @@ const Userchange = ({ onSendData }) => {
               <Text style={styles.text}>Email</Text>
               <TextInput
                 style={styles.inputText}
-                value={user.email}
+                value={user?.email || ""}
                 keyboardType="email-address"
               />
-              {/* <Text style={styles.text}>Current password</Text>
-              <TextInput
-                style={styles.inputText}
-                value={user.password}
-                secureTextEntry
-              /> */}
-            </>
+            </View>
           )}
         </View>
         <View style={styles.separator} /> {/* Đường kẻ */}
@@ -147,8 +141,6 @@ const Userchange = ({ onSendData }) => {
               setPassword(e.nativeEvent.text);
             }}
           />
-          {/* <Text style={styles.text}>Repeat new password</Text>
-          <TextInput style={styles.inputText} secureTextEntry /> */}
           <TouchableOpacity
             style={{
               borderColor: "black",
@@ -157,7 +149,7 @@ const Userchange = ({ onSendData }) => {
               padding: 10,
               marginRight: 30,
               marginTop: 10,
-              maxWidth: 160,
+              maxWidth: 200,
               alignSelf: "flex-end",
               flexDirection: "row",
               justifyContent: "center",
@@ -199,7 +191,7 @@ const Userchange = ({ onSendData }) => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20 },
+  container: { flex: 1, padding: 10 },
   headText: {
     fontSize: 20,
     fontWeight: "bold",
@@ -229,6 +221,3 @@ const styles = StyleSheet.create({
 });
 
 export default Userchange;
-function fetchUser(userId: any) {
-  throw new Error("Function not implemented.");
-}

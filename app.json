@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "my-app1",
-    "slug": "my-app1",
+    "name": "FlowApp",
+    "slug": "FlowApp",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/FLOWTEAMS.png",
+    "icon": "./assets/images/FlowTeam.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -28,12 +28,14 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/FLOWTEAMS.png",
+          "image": "./assets/images/FlowTeam.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
-      ]
+      ],
+      "expo-secure-store",
+      "expo-asset"
     ],
     "experiments": {
       "typedRoutes": true

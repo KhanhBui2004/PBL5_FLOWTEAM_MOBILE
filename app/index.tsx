@@ -35,8 +35,8 @@ export default function Index() {
           Documents
         </Link>
 
-        <Link href="/user" style={styles.link}>
-          User
+        <Link href="/flow" style={styles.link}>
+          Flow
         </Link>
       </SafeAreaView>
     </SafeAreaProvider>

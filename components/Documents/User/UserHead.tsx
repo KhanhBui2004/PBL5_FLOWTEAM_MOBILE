@@ -3,7 +3,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { FiCamera } from "react-icons/fi";
 import { launchImageLibrary } from "react-native-image-picker";
 import Icon from "react-native-vector-icons/Feather";
-// import { UserContext } from "D:/PBL5/PBL5_FLOW_TEAMS_MOBILE/context/UserContext";
 import { getUser } from "@/services/AuthService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -129,6 +128,3 @@ const styles = StyleSheet.create({
 });
 
 export default User;
-function fetchUser(userId: any) {
-  throw new Error("Function not implemented.");
-}

@@ -14,27 +14,20 @@ const UserProfile = () => {
   };
 
   return (
-    // <View style={{ flex: 1 }}>
-    //   <UserHead />
-    //   <View style={styles.separator} /> {/* Đường kẻ */}
-    //   <UserSetting />
-    //   <View style={styles.separator} /> {/* Đường kẻ */}
-    //   <UserChange />
-    // </View>
-    <View style={{ flex: 1 }}>
+    <>
       <View style={tw`bg-gray-100 min-h-full`}>
         <View style={tw`z-10`}>
           <DocNavbar />
         </View>
-        <View>
+        <View style={{ flex: 1 }}>
           <UserHead />
-          <View style={styles.separator} /> {/* Đường kẻ */}
+          <View style={styles.separator} />
           <UserSetting user={userData} />
-          <View style={styles.separator} /> {/* Đường kẻ */}
+          <View style={styles.separator} />
           <UserChange onSendData={handleDataFromChild} />
         </View>
       </View>
-    </View>
+    </>
   );
 };
 

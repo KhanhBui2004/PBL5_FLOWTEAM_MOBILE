@@ -17,10 +17,10 @@ export default function DocNavbar() {
   return (
     <>
       {/* Header */}
-      <View style={tw`flex flex-row items-center bg-white shadow px-6 py-4`}>
+      <View style={tw`flex flex-row items-center bg-white shadow px-6 py-2`}>
         <Image
-          source={require("../../assets/images/FLOWTEAMS.png")}
-          style={tw`h-10 w-32`}
+          source={require("../../assets/images/FlowTeam.png")}
+          style={tw`h-20 w-20`}
           resizeMode="contain"
         />
         <View style={tw`flex-1 flex-row justify-end items-center relative`}>
@@ -39,7 +39,7 @@ export default function DocNavbar() {
             >
               <TouchableOpacity
                 style={tw`flex flex-row justify-first items-center py-2 border-b border-gray-300`}
-                onPress={() => router.push("/documents/mydoc")}
+                onPress={() => router.push("/documents/mydocuments")}
               >
                 <FontAwesome name="folder" size={15} color="#000" />
                 <Text style={tw`text-gray-800 mx-2`}>My Documents</Text>

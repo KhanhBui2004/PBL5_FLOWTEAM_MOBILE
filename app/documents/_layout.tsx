@@ -3,21 +3,20 @@ import { Stack } from "expo-router";
 export default function RootLayout() {
   return (
     <Stack screenOptions={{ headerShown: false }}>
-      {/* <Stack.Screen name="index" options={{ title: "Trang index" }} /> */}
-      {/* <Stack.Screen
+      <Stack.Screen
         name="index"
         options={{ title: "Trang chủ", headerShown: false }}
-      /> */}
+      />
       <Stack.Screen
-        name="MyDocuments"
+        name="mydocuments"
         options={{ title: "My Documents", headerShown: false }}
       />
       <Stack.Screen
-        name="Trash"
+        name="trash"
         options={{ title: "Thùng rác", headerShown: false }}
       />
       <Stack.Screen
-        name="Setting"
+        name="setting"
         options={{ title: "Cài đặt", headerShown: false }}
       />
       <Stack.Screen name="user" options={{ title: "Profile" }} />
