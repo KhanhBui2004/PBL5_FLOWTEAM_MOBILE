@@ -37,7 +37,7 @@ const Trash = ({ subtitle, empty }) => {
             <View key={index} style={tw`w-1/2 p-2`}>
               <CreatedProject
                 title={e.name}
-                img="https://via.placeholder.com/150"
+                img={"http://192.168.110.2:8000/imgs/projectImgs/" + e.img}
               />
             </View>
           ))

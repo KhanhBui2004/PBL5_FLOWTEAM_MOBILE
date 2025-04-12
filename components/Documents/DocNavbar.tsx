@@ -20,11 +20,13 @@ export default function DocNavbar() {
     <>
       {/* Header */}
       <View style={tw`flex flex-row items-center bg-white shadow px-6 py-3`}>
-        <Image
-          source={require("../../assets/images/FlowTeam.png")}
-          style={{ height: 100, width: 100 }}
-          resizeMode="contain"
-        />
+        <TouchableOpacity onPress={() => router.push("/home")}>
+          <Image
+            source={require("../../assets/images/FlowTeam.png")}
+            style={{ height: 100, width: 100 }}
+            resizeMode="contain"
+          />
+        </TouchableOpacity>
         <View style={tw`flex-1 flex-row justify-end items-center relative`}>
           {/* Nút Hamburger */}
           <TouchableOpacity
