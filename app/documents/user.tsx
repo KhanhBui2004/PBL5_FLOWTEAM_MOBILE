@@ -27,7 +27,7 @@ const UserProfile = () => {
           <DocNavbar />
         </View>
         <View style={{ flex: 1 }}>
-          <UserHead />
+          <UserHead onSendData={handleDataFromChild} user={userData} />
           <View style={styles.separator} />
           <UserSetting user={userData} />
           <View style={styles.separator} />
