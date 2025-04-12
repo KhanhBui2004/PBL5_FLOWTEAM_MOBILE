@@ -1,5 +1,5 @@
 import RegisterForm from "../components/Auth/Register";
 
-export default function LoginPage() {
+export default function RegisterPage() {
   return <RegisterForm />;
 }

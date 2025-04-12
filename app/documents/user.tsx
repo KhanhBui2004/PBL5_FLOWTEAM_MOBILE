@@ -21,12 +21,12 @@ const UserProfile = () => {
     //   <View style={styles.separator} /> {/* Đường kẻ */}
     //   <UserChange />
     // </View>
-    <View style={{ flex: 1 }}>
+    <View>
       <View style={tw`bg-gray-100 min-h-full`}>
         <View style={tw`z-10`}>
           <DocNavbar />
         </View>
-        <View>
+        <View style={{ flex: 1 }}>
           <UserHead />
           <View style={styles.separator} /> {/* Đường kẻ */}
           <UserSetting user={userData} />

@@ -10,8 +10,10 @@ import tw from "tailwind-react-native-classnames";
 import { useState } from "react";
 import { FontAwesome } from "@expo/vector-icons";
 import { router, useRouter } from "expo-router";
+import { useUser } from "@/context/UserContext";
 
 export default function DocNavbar() {
+  const { token, logout } = useUser();
   const [isMenuVisible, setIsMenuVisible] = useState(false);
 
   return (
@@ -66,6 +68,10 @@ export default function DocNavbar() {
               </TouchableOpacity>
               <TouchableOpacity
                 style={tw`flex flex-row justify-first items-center py-2`}
+                onPress={() => {
+                  console.log("Logout clicked");
+                  logout();
+                }}
               >
                 <FontAwesome name="sign-out" size={15} color="#000" />
                 <Text style={tw`text-red-500 mx-2`}>Log out</Text>
