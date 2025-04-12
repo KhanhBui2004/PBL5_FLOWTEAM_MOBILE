@@ -119,8 +119,8 @@ export default function Home() {
       {/* Header */}
       <View style={tw`flex flex-row items-center bg-white shadow px-6 py-4`}>
         <Image
-          source={require("../../assets/images/FLOWTEAMS.png")}
-          style={tw`h-10 w-32`}
+          source={require("../../assets/images/FlowTeam.png")}
+          style={{ height: 10, width: 10 }}
           resizeMode="contain"
         />
         <View style={tw`flex-1 flex-row justify-end items-center`}>
