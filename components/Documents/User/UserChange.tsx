@@ -161,30 +161,6 @@ const Userchange = ({ onSendData }) => {
             </Text>
           </TouchableOpacity>
         </View>
-        <View style={styles.separator} /> {/* Đường kẻ */}
-        <View>
-          <Text style={styles.headText}>Delete account</Text>
-          <View>
-            <Text style={{ fontSize: 18, padding: 5 }}>
-              If you delete your Lucid account, your data will be gone forever.
-            </Text>
-            <TouchableOpacity
-              style={{ alignSelf: "flex-end" }}
-              onPress={DeleteAcc}
-            >
-              <Text
-                style={{
-                  fontSize: 20,
-                  color: "red",
-                  padding: 5,
-                  fontWeight: "bold",
-                }}
-              >
-                Delete Account
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
       </ScrollView>
     </View>
   );

@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { Svg, Path } from "react-native-svg";
 import tw from "tailwind-react-native-classnames";
@@ -7,7 +7,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { loginUser } from "../../services/AuthService"; // Adjust the import path as necessary
 
-const LoginScreen = () => {
+export default function LoginScreen({ token }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
@@ -45,6 +45,12 @@ const LoginScreen = () => {
       router.push("/documents/");
     }
   };
+
+  useEffect(() => {
+    if (token) {
+      router.push("/home");
+    }
+  }, [token]);
 
   return (
     <View style={tw`flex-1 justify-center items-center bg-gray-100 px-4`}>
@@ -127,6 +133,6 @@ const LoginScreen = () => {
       </View>
     </View>
   );
-};
+}
 
 export default LoginScreen;

@@ -14,7 +14,14 @@ const UserProfile = () => {
   };
 
   return (
-    <>
+    // <View style={{ flex: 1 }}>
+    //   <UserHead />
+    //   <View style={styles.separator} /> {/* Đường kẻ */}
+    //   <UserSetting />
+    //   <View style={styles.separator} /> {/* Đường kẻ */}
+    //   <UserChange />
+    // </View>
+    <View>
       <View style={tw`bg-gray-100 min-h-full`}>
         <View style={tw`z-10`}>
           <DocNavbar />
