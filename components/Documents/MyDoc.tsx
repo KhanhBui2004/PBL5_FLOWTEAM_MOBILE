@@ -40,9 +40,9 @@ const MyDoc = ({ subtitle, empty }) => {
           myDoc.map((e, index) => (
             <View key={index} style={tw`w-1/2 p-2`}>
               <CreatedProject
-                id={project._id}
+                id={e._id}
                 title={e.name}
-                img={"http://192.168.110.2:8000/imgs/projectImgs/" + e.img}
+                img={"http://10.10.2.193:8000/imgs/projectImgs/" + e.img}
               />
             </View>
           ))
