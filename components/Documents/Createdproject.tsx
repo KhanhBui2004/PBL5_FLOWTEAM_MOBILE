@@ -2,8 +2,17 @@ import { View, Text, TouchableOpacity, ScrollView, Image } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import tw from "tailwind-react-native-classnames";
 import { Picker } from "@react-native-picker/picker";
+import { router } from "expo-router";
 
-const CreatedProject = ({ title, img }) => {
+const CreatedProject = ({ title, img, id, onOpen }) => {
+  const handleProjectPress = (projectId) => {
+    console.log("Project ID:", projectId);
+    // Bạn có thể điều hướng, lưu vào state, hoặc làm gì đó với projectId
+    router.push({
+      pathname: "/documents/flow",
+      params: { projectId },
+    });
+  };
   return (
     <View
       style={tw`max-h-80 min-h-52 w-48 mr-6 mb-5 rounded-lg border border-gray-400 bg-gray-50 p-3`}
@@ -13,7 +22,10 @@ const CreatedProject = ({ title, img }) => {
         <Image source={{ uri: img }} style={tw`h-32 w-44 bg-white`} />
       </View>
       <View style={tw`flex-row justify-between items-center mb-2`}>
-        <TouchableOpacity style={tw`bg-green-700 px-2 py-1 rounded-lg`}>
+        <TouchableOpacity
+          style={tw`bg-green-700 px-2 py-1 rounded-lg`}
+          onPress={() => handleProjectPress(id)}
+        >
           <Text style={tw`text-white`}>Open</Text>
         </TouchableOpacity>
         <View style={tw`flex-row`}>

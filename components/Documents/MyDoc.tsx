@@ -39,6 +39,7 @@ const MyDoc = ({ subtitle, empty }) => {
           myDoc.map((e, index) => (
             <View key={index} style={tw`w-1/2 p-2`}>
               <CreatedProject
+                id={project._id}
                 title={e.name}
                 img="https://via.placeholder.com/150"
               />

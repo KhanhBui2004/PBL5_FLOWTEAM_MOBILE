@@ -48,6 +48,7 @@ const DocHome = ({ subtitle, empty }) => {
           projects.map((project, index) => (
             <View key={index} style={tw`w-1/2 p-2`}>
               <CreatedProject
+                id={project._id}
                 title={project.name} // Giả sử mỗi dự án có thuộc tính "name"
                 img={project.image || "https://via.placeholder.com/150"} // Giả sử mỗi dự án có thuộc tính "image"
               />
