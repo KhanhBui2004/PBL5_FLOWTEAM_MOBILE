@@ -48,8 +48,11 @@ const DocHome = ({ subtitle, empty }) => {
           projects.map((project, index) => (
             <View key={index} style={tw`w-1/2 p-2`}>
               <CreatedProject
-                title={project.name}
-                img={"http://192.168.110.2:8000/imgs/projectImgs/" + project.img}
+                id={project._id}
+                title={project.name} // Giả sử mỗi dự án có thuộc tính "name"
+                img={
+                  "http://192.168.110.2:8000/imgs/projectImgs/" + project.img
+                } // Giả sử mỗi dự án có thuộc tính "image"
               />
             </View>
           ))

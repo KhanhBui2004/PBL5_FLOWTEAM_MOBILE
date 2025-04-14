@@ -20,6 +20,7 @@ export default function RootLayout() {
         options={{ title: "Cài đặt", headerShown: false }}
       />
       <Stack.Screen name="user" options={{ title: "Profile" }} />
+      <Stack.Screen name="flow" options={{ title: "Flow" }} />
     </Stack>
   );
 }
