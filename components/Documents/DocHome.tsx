@@ -11,6 +11,7 @@ import CreatedProject from "./Createdproject";
 import { useEffect, useState } from "react";
 import { getProjectsById } from "@/services/AuthService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { IP } from "@/config";
 
 const DocHome = ({ subtitle, empty }) => {
   const [projects, setProjects] = useState([]);
@@ -50,7 +51,7 @@ const DocHome = ({ subtitle, empty }) => {
               <CreatedProject
                 id={e._id}
                 title={e.name} // Giả sử mỗi dự án có thuộc tính "name"
-                img={"http://192.168.111.59:8000/imgs/projectImgs/" + e.img} // Giả sử mỗi dự án có thuộc tính "image"
+                img={`${IP}:8000/imgs/projectImgs/` + e.img} // Giả sử mỗi dự án có thuộc tính "image"
               />
             </View>
           ))

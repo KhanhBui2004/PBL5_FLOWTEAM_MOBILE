@@ -5,6 +5,7 @@ import CreatedProject from "./Createdproject";
 import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getDeletedProjectsByUser } from "@/services/AuthService";
+import { IP } from "@/config";
 
 const Trash = ({ subtitle, empty }) => {
   const [myTrashDocs, setMyTrashDoc] = useState([]);
@@ -38,7 +39,7 @@ const Trash = ({ subtitle, empty }) => {
               <CreatedProject
                 id={e._id}
                 title={e.name}
-                img={"http://192.168.111.59:8000/imgs/projectImgs/" + e.img}
+                img={`${IP}:8000/imgs/projectImgs/` + e.img}
               />
             </View>
           ))

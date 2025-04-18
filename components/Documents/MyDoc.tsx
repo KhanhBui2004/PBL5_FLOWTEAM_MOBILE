@@ -5,6 +5,7 @@ import CreatedProject from "./Createdproject";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
 import { getProjectsByUser } from "@/services/AuthService";
+import { IP } from "@/config";
 
 const MyDoc = ({ subtitle, empty }) => {
   const [myDoc, setMyDoc] = useState([]);
@@ -42,7 +43,7 @@ const MyDoc = ({ subtitle, empty }) => {
               <CreatedProject
                 id={e._id}
                 title={e.name}
-                img={"http://192.168.111.59:8000/imgs/projectImgs/" + e.img}
+                img={`${IP}:8000/imgs/projectImgs/` + e.img}
               />
             </View>
           ))

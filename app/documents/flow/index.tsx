@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import WebView from "react-native-webview";
 import { useLocalSearchParams } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { IP } from "@/config";
 
 const index = () => {
   const [url, setUrl] = useState("");
@@ -21,7 +22,7 @@ const index = () => {
 
   useEffect(() => {
     if (projectId) {
-      setUrl(`http://192.168.111.59:5173/flow/${projectId}`);
+      setUrl(`${IP}:5173/flow/${projectId}`);
     }
   }, [projectId]);
 
@@ -50,11 +51,44 @@ const index = () => {
         javaScriptEnabled={true}
         domStorageEnabled={true}
         originWhitelist={["*"]}
+        mediaPlaybackRequiresUserAction={false}
+        allowsInlineMediaPlayback={true}
+        allowsFullscreenVideo={true}
+        androidHardwareAccelerationDisabled={false}
         onMessage={(event) => {
           const valueFromLocalStorage = event.nativeEvent.data;
           console.log("Dữ liệu từ localStorage:", valueFromLocalStorage);
         }}
         onLoadEnd={setLocalStorageValue}
+        //       injectedJavaScript={`
+        //         (function() {
+        //   try {
+        //     // Bắt lỗi console.error
+        //     const originalConsoleError = console.error;
+        //     console.error = function(...args) {
+        //       window.ReactNativeWebView.postMessage("🚨 console.error: " + JSON.stringify(args));
+        //       originalConsoleError.apply(console, args);
+        //     };
+
+        //     // Bắt lỗi window.onerror
+        //     window.onerror = function(message, source, lineno, colno, error) {
+        //       const errorMsg = "🔥 window.onerror: " + message + " at " + source + ":" + lineno + ":" + colno;
+        //       window.ReactNativeWebView.postMessage(errorMsg);
+        //     };
+
+        //     // Bắt lỗi Promise unhandled
+        //     window.onunhandledrejection = function(event) {
+        //       window.ReactNativeWebView.postMessage("⚠️ Unhandled promise rejection: " + event.reason);
+        //     };
+
+        //     console.log("✅ FE error listeners injected");
+
+        //   } catch (err) {
+        //     window.ReactNativeWebView.postMessage("❌ Lỗi khi inject error listeners: " + err.message);
+        //   }
+        // })();
+        //         true;
+        //       `}
       />
     </View>
   );
