@@ -52,6 +52,7 @@ const DocHome = ({ subtitle, empty }) => {
                 id={e._id}
                 title={e.name} // Giả sử mỗi dự án có thuộc tính "name"
                 img={`${IP}:8000/imgs/projectImgs/` + e.img} // Giả sử mỗi dự án có thuộc tính "image"
+                project={e}
               />
             </View>
           ))

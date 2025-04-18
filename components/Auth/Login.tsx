@@ -134,5 +134,3 @@ export default function LoginScreen({ token }) {
     </View>
   );
 }
-
-export default LoginScreen;

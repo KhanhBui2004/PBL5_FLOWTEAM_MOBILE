@@ -1,10 +1,23 @@
-import { View, Text, TouchableOpacity, ScrollView, Image } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  Image,
+  Modal,
+  TextInput,
+} from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import tw from "tailwind-react-native-classnames";
 import { Picker } from "@react-native-picker/picker";
 import { router } from "expo-router";
+import { useState } from "react";
+import { searchUser } from "@/services/AuthService";
 
-const CreatedProject = ({ title, img, id, onOpen }) => {
+const CreatedProject = ({ title, img, id, project }) => {
+  const [userSearch, setUserSearch] = useState([]);
+  const [isUserModalVisible, setUserModalVisible] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const handleProjectPress = (projectId) => {
     console.log("Project ID:", projectId);
     // Bạn có thể điều hướng, lưu vào state, hoặc làm gì đó với projectId
@@ -13,6 +26,35 @@ const CreatedProject = ({ title, img, id, onOpen }) => {
       params: { projectId },
     });
   };
+
+  const handleSearchUser = async () => {
+    console.log(searchQuery);
+    let response = await searchUser(searchQuery.trim());
+    if (response.status === 200) {
+      console.log(response.users);
+
+      // Lấy danh sách ID đã tồn tại
+      const existingUserIds = new Set([
+        project.owner._id,
+        ...project.editors.map((u) => u._id),
+        ...project.viewers.map((u) => u._id),
+      ]);
+      console.log(existingUserIds);
+
+      // Lọc ra những user chưa tồn tại
+      const filteredUsers = response.users.filter(
+        (user) => !existingUserIds.has(user._id)
+      );
+
+      setUserSearch(filteredUsers);
+    }
+  };
+
+  const handleUserPress = () => {
+    setUserModalVisible(true);
+    console.log(project);
+  };
+
   return (
     <View
       style={tw`max-h-80 min-h-52 w-48 mr-6 mb-5 rounded-lg border border-gray-400 bg-gray-50 p-3`}
@@ -33,7 +75,12 @@ const CreatedProject = ({ title, img, id, onOpen }) => {
             <FontAwesome name="link" size={20} color="black" />
           </TouchableOpacity>
           <TouchableOpacity style={tw`mr-2`}>
-            <FontAwesome name="users" size={20} color="black" />
+            <FontAwesome
+              name="users"
+              size={20}
+              color="black"
+              onPress={handleUserPress}
+            />
           </TouchableOpacity>
           <TouchableOpacity>
             <FontAwesome name="ellipsis-v" size={20} color="black" />
@@ -45,6 +92,92 @@ const CreatedProject = ({ title, img, id, onOpen }) => {
         <Picker.Item label="Complete" value="complete" />
         <Picker.Item label="Pending" value="pending" />
       </Picker> */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={isUserModalVisible}
+        onRequestClose={() => setUserModalVisible(false)}
+      >
+        <View
+          style={tw`flex-1 justify-center items-center bg-black bg-opacity-50`}
+        >
+          <View style={tw`bg-white p-4 rounded-lg w-11/12`}>
+            <Text style={tw`text-lg font-bold mb-2`}>
+              🔍 Tìm kiếm người dùng
+            </Text>
+
+            {/* Ô nhập + nút tìm kiếm */}
+            <View style={tw`flex-row items-center mb-4`}>
+              <TextInput
+                style={tw`flex-1 border border-gray-300 rounded p-2 mr-2`}
+                placeholder="Nhập tên người dùng..."
+                value={searchQuery}
+                onChangeText={setSearchQuery}
+              />
+              <TouchableOpacity
+                style={tw`bg-blue-500 px-4 py-2 rounded`}
+                onPress={() => {
+                  // Gọi API tìm kiếm hoặc lọc danh sách tại đây
+                  handleSearchUser();
+                }}
+              >
+                <Text style={tw`text-white`}>Tìm</Text>
+              </TouchableOpacity>
+            </View>
+
+            {userSearch.length > 0 && (
+              <View style={tw`mb-4`}>
+                <Text style={tw`text-base font-semibold mb-1`}>
+                  🔎 Kết quả tìm kiếm:
+                </Text>
+                {userSearch.map((user, index) => (
+                  <View
+                    key={index}
+                    style={tw`w-full flex-row justify-between items-center p-2 border-b border-gray-200`}
+                  >
+                    <Text>{user.name}</Text>
+                    {/* Bạn có thể thêm nút để thêm người này vào project nếu muốn */}
+                    <TouchableOpacity
+                      style={tw`bg-green-500 px-3 py-1 rounded`}
+                      onPress={() => {
+                        console.log("Thêm người dùng:", user.name);
+                        // Viết thêm logic thêm user vào project tại đây nếu cần
+                      }}
+                    >
+                      <Text style={tw`text-white`}>Thêm</Text>
+                    </TouchableOpacity>
+                  </View>
+                ))}
+              </View>
+            )}
+
+            {/* Thông tin project */}
+            <Text style={tw`text-lg font-bold mb-2`}>📁 Thông tin Project</Text>
+
+            <View style={tw`mb-4`}>
+              <Text style={tw`text-base font-semibold mb-1`}>Editors:</Text>
+              {project?.editors?.map((e, index) => (
+                <View key={index} style={tw`w-1/2 p-2`}>
+                  <Text>{e.name}</Text>
+                </View>
+              ))}
+              <Text style={tw`text-base font-semibold mb-1`}>Viewers:</Text>
+              {project?.viewers?.map((e, index) => (
+                <View key={index} style={tw`w-1/2 p-2`}>
+                  <Text>{e.name}</Text>
+                </View>
+              ))}
+            </View>
+
+            <TouchableOpacity
+              style={tw`mt-2 bg-red-500 py-2 rounded`}
+              onPress={() => setUserModalVisible(false)}
+            >
+              <Text style={tw`text-white text-center`}>Đóng</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };

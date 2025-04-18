@@ -247,3 +247,30 @@ export const uploadImage = async (file) => {
     throw err;
   }
 };
+
+export const searchUser = async (data) => {
+  try {
+    console.log(data);
+    const response = await API.get(`/users/search?data=${data}`);
+    return {
+      status: 200,
+      users: response.data.users,
+    };
+  } catch (err) {
+    console.error("Lỗi khi upload:", err);
+    throw err;
+  }
+  // const token = localStorage.getItem("jwt"); // Lấy token từ localStorage
+  // if (!token) {
+  //   return Promise.reject(new Error("Token not found"));
+  // }
+
+  // return axios.get(`http://:8000/api/users/search?data=${data}`, {
+  //   headers: {
+  //     Authorization: `Bearer ${token}`,  // ⚡ Gửi token trong header
+  //     "Cache-Control": "no-cache",
+  //     Pragma: "no-cache",
+  //     Expires: "0"
+  //   }
+  // });
+};
