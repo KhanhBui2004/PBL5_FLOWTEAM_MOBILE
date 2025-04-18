@@ -12,12 +12,16 @@ import { useVideoPlayer, VideoView } from "expo-video";
 import { Video } from "expo-av";
 import tw from "tailwind-react-native-classnames";
 import { FontAwesome } from "@expo/vector-icons";
-import { router, useRouter } from "expo-router";
+import { router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useUser } from "@/context/UserContext";
 
 export default function Home() {
   const { token, logout } = useUser();
+  useEffect(() => {
+    console.log("Token:");
+  }, [token]);
+  
   const player = useVideoPlayer(
     "https://corporate-assets.lucid.co/chart/080af32f-35fa-4f39-b788-e90ea8100501.mp4",
     (player) => {
@@ -120,7 +124,7 @@ export default function Home() {
       <View style={tw`flex flex-row items-center bg-white shadow px-6 py-4`}>
         <Image
           source={require("../../assets/images/FlowTeam.png")}
-          style={{ height: 10, width: 10 }}
+          style={{ height: 100, width: 100 }}
           resizeMode="contain"
         />
         <View style={tw`flex-1 flex-row justify-end items-center`}>
@@ -138,12 +142,6 @@ export default function Home() {
                 onPress={async () => {
                   console.log("Logout clicked");
                   logout();
-                  // navigator.dispatch(
-                  //   CommonActions.reset({
-                  //     index: 0,
-                  //     routes: [{ name: 'TênMànHìnhHiệnTại' }],
-                  //   })
-                  // );
                 }}
               >
                 <FontAwesome name="sign-out" size={25} color="#fff" />
