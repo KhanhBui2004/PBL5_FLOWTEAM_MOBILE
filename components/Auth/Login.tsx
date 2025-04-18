@@ -42,7 +42,7 @@ export default function LoginScreen({ token }) {
       saveId(id);
       saveToken(token);
       console.log("Login successful:", response);
-      router.push("/documents/");
+      router.push("/home");
     }
   };
 

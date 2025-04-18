@@ -7,43 +7,7 @@ import HomePage from "./home";
 import { useEffect } from "react";
 
 export default function Index() {
-  return (
-    // <SafeAreaProvider>
-    //   <SafeAreaView
-    //     style={{
-    //       flex: 1,
-    //       justifyContent: "center",
-    //       alignItems: "center",
-    //     }}
-    //   >
-    //     {/* <Statusbar></Statusbar> */}
-    //     <Text>Edit app/index.tsx to edit this screen.</Text>
-
-    //     <Text>Open up app/index.tsx to start working on your app!</Text>
-
-    //     <Link href="/home" style={styles.link}>
-    //       Home
-    //     </Link>
-
-    //     <Link href="/login" style={styles.link}>
-    //       Login
-    //     </Link>
-
-    //     <Link href="/register" style={styles.link}>
-    //       Register
-    //     </Link>
-
-    //     <Link href="/documents" style={styles.link}>
-    //       Documents
-    //     </Link>
-
-    //     <Link href="/user" style={styles.link}>
-    //       User
-    //     </Link>
-    //   </SafeAreaView>
-    // </SafeAreaProvider>
-    <Redirect href="/home" />
-  );
+  return <Redirect href="/home" />;
 }
 
 const styles = StyleSheet.create({

@@ -7,7 +7,7 @@ import DocumentsPage from "./document";
 import { UserContext } from "../context/UserContext";
 
 export default function RootLayout() {
-  const router = useRouter();
+  // const router = useRouter();
   const [token, setToken] = useState("");
 
   useEffect(() => {
@@ -28,20 +28,23 @@ export default function RootLayout() {
     try {
       console.log("Logout function calling...");
       await AsyncStorage.removeItem("userToken");
+      setToken("");
       console.log("Logout function called");
-      router.push("/login");
+      router.replace("/login");
     } catch (error) {
       console.error("Error removing token:", error);
     }
   };
   return (
     <UserContext.Provider value={{ token, logout }}>
-      <Stack screenOptions={{ headerShown: false }}>
-        {/* <Stack.Screen name="index" options={{ title: "Trang index" }} /> */}
-
+      <Stack>
         <Stack.Screen
           name="home"
           options={{ title: "Trang chủ", headerShown: false }}
+        />
+        <Stack.Screen
+          name="documents"
+          options={{ title: "Documents", headerShown: false }}
         />
         <Stack.Screen
           name="login"
@@ -51,10 +54,7 @@ export default function RootLayout() {
           name="register"
           options={{ title: "Đăng kí", headerShown: false }}
         />
-        <Stack.Screen
-          name="documents"
-          options={{ title: "Documents", headerShown: false }}
-        />
+
         {/* <Stack.Screen name="user" options={{ title: "Profile" }} /> */}
       </Stack>
     </UserContext.Provider>
