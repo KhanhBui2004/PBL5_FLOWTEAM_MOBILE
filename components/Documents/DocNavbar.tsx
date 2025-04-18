@@ -20,7 +20,7 @@ export default function DocNavbar() {
     <>
       {/* Header */}
       <View style={tw`flex flex-row items-center bg-white shadow px-6 py-3`}>
-        <TouchableOpacity onPress={() => router.push("/home")}>
+        <TouchableOpacity onPress={() => router.replace("/")}>
           <Image
             source={require("../../assets/images/FlowTeam.png")}
             style={{ height: 100, width: 100 }}
