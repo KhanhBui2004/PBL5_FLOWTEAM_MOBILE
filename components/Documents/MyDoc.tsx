@@ -42,7 +42,7 @@ const MyDoc = ({ subtitle, empty }) => {
               <CreatedProject
                 id={e._id}
                 title={e.name}
-                img={"http://10.10.2.193:8000/imgs/projectImgs/" + e.img}
+                img={"http://192.168.111.59:8000/imgs/projectImgs/" + e.img}
               />
             </View>
           ))

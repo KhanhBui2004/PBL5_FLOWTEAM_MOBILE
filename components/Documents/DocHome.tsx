@@ -50,7 +50,7 @@ const DocHome = ({ subtitle, empty }) => {
               <CreatedProject
                 id={e._id}
                 title={e.name} // Giả sử mỗi dự án có thuộc tính "name"
-                img={"http://10.10.2.193:8000/imgs/projectImgs/" + e.img} // Giả sử mỗi dự án có thuộc tính "image"
+                img={"http://192.168.111.59:8000/imgs/projectImgs/" + e.img} // Giả sử mỗi dự án có thuộc tính "image"
               />
             </View>
           ))

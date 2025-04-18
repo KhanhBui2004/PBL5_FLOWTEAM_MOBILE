@@ -109,7 +109,7 @@ export default function LoginScreen({ token }) {
         </TouchableOpacity>
 
         {/* Facebook Sign-in */}
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={tw`mt-4 p-3 border border-gray-300 rounded-lg flex-row justify-center items-center`}
         >
           <Svg width="24" height="24" viewBox="0 0 448 512">
@@ -121,7 +121,7 @@ export default function LoginScreen({ token }) {
           <Text style={tw`ml-2 text-gray-700 font-medium`}>
             Sign in with Facebook
           </Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         {/* Register Link */}
         <View style={tw`mt-4 flex-row justify-center`}>

@@ -38,7 +38,7 @@ const Trash = ({ subtitle, empty }) => {
               <CreatedProject
                 id={e._id}
                 title={e.name}
-                img={"http://192.168.110.2:8000/imgs/projectImgs/" + e.img}
+                img={"http://192.168.111.59:8000/imgs/projectImgs/" + e.img}
               />
             </View>
           ))
