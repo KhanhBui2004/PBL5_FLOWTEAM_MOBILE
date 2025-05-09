@@ -3,7 +3,7 @@ import { router, Stack, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import HomePage from "./home";
 import LoginPage from "./login";
-import DocumentsPage from "./document";
+// import DocumentsPage from "./document";
 import { UserContext } from "../context/UserContext";
 
 export default function RootLayout() {

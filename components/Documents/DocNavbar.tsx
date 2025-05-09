@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   ScrollView,
   FlatList,
+  Modal,
 } from "react-native";
 import tw from "tailwind-react-native-classnames";
 import { useState } from "react";
@@ -15,6 +16,7 @@ import { useUser } from "@/context/UserContext";
 export default function DocNavbar() {
   const { token, logout } = useUser();
   const [isMenuVisible, setIsMenuVisible] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
   return (
     <>
@@ -41,6 +43,62 @@ export default function DocNavbar() {
             <View
               style={tw`absolute top-12 right-4 bg-white shadow-lg rounded-lg p-3`}
             >
+              {/* Button mở modal */}
+              <TouchableOpacity
+                style={tw`flex flex-row items-center py-2 border-b border-gray-300`}
+                onPress={() => setModalVisible(true)}
+              >
+                <FontAwesome name="plus-square" size={15} color="#000" />
+                <Text style={tw`text-gray-800 mx-2`}>New Flow</Text>
+              </TouchableOpacity>
+              {/* Modal */}
+              <Modal
+                transparent={true}
+                visible={modalVisible}
+                animationType="slide"
+                onRequestClose={() => setModalVisible(false)}
+              >
+                <View
+                  style={tw`flex-1 justify-center items-center bg-black bg-opacity-50`}
+                >
+                  <View style={tw`bg-white p-6 rounded-xl w-72`}>
+                    <View style={tw`items-center`}>
+                      <Text style={tw`text-lg font-bold mb-4`}>
+                        Create Flow
+                      </Text>
+                    </View>
+
+                    <TouchableOpacity
+                      style={tw`py-2`}
+                      onPress={() => {
+                        router.push("/documents/flow/newflow");
+                        setModalVisible(false);
+                      }}
+                    >
+                      <Text style={tw`text-base text-blue-600`}>New Flow</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                      style={tw`py-2`}
+                      onPress={() => {
+                        router.push("/documents/flow/newflowAI");
+                        setModalVisible(false);
+                      }}
+                    >
+                      <Text style={tw`text-base text-blue-600`}>
+                        New Flow With AI
+                      </Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                      onPress={() => setModalVisible(false)}
+                      style={tw`mt-4`}
+                    >
+                      <Text style={tw`text-center text-red-500`}>Đóng</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </Modal>
               <TouchableOpacity
                 style={tw`flex flex-row justify-first items-center py-2 border-b border-gray-300`}
                 onPress={() => router.push("/documents/mydocuments")}

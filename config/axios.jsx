@@ -3,14 +3,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { IP } from "../config";
 
 const API = axios.create({
-  // baseURL: "http://192.168.111.59:8000/api", // URL API của bạn
   baseURL: `${IP}:8000/api`, // URL API của bạn
   timeout: 10000, // Timeout 10 giây
 });
 
 const getToken = async () => {
-  try {
-    const token = await AsyncStorage.getItem("userToken");
+  try {    const token = await AsyncStorage.getItem("userToken");
     return token;
   } catch (e) {
     console.error("Lỗi khi lấy token:", e);
@@ -18,7 +16,6 @@ const getToken = async () => {
   }
 };
 
-// 🛠 Thêm Interceptor để xử lý token
 API.interceptors.request.use(
   async (config) => {
     const token = await getToken(); // Lấy token từ AsyncStorage

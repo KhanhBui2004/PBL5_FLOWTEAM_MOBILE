@@ -21,7 +21,7 @@ export default function Home() {
   useEffect(() => {
     console.log("Token:");
   }, [token]);
-  
+
   const player = useVideoPlayer(
     "https://corporate-assets.lucid.co/chart/080af32f-35fa-4f39-b788-e90ea8100501.mp4",
     (player) => {
@@ -114,6 +114,7 @@ export default function Home() {
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => <ProfileCard profile={item} />}
         contentContainerStyle={tw`p-4`}
+        scrollEnabled={false}
       />
     );
   };
