@@ -11,13 +11,21 @@ import { FontAwesome } from "@expo/vector-icons";
 import tw from "tailwind-react-native-classnames";
 import { Picker } from "@react-native-picker/picker";
 import { router } from "expo-router";
-import { useState } from "react";
-import { searchUser } from "@/services/AuthService";
+import { useEffect, useState } from "react";
+import {
+  searchUser,
+  handleAddEditor,
+  handleAddViewer,
+} from "@/services/AuthService";
 
 const CreatedProject = ({ title, img, id, project }) => {
   const [userSearch, setUserSearch] = useState([]);
   const [isUserModalVisible, setUserModalVisible] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [isRoleModalVisible, setRoleModalVisible] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null); // Lưu user khi nhấn "Thêm"
+  const [projectData, setProjectData] = useState(project);
+
   const handleProjectPress = (projectId) => {
     console.log("Project ID:", projectId);
     // Bạn có thể điều hướng, lưu vào state, hoặc làm gì đó với projectId
@@ -55,6 +63,10 @@ const CreatedProject = ({ title, img, id, project }) => {
     console.log(project);
   };
 
+  useEffect(() => {
+    setProjectData(project); // đồng bộ khi prop project thay đổi
+  }, [project]);
+
   return (
     <View
       style={tw`max-h-80 min-h-52 w-48 mr-6 mb-5 rounded-lg border border-gray-400 bg-gray-50 p-3`}
@@ -87,11 +99,7 @@ const CreatedProject = ({ title, img, id, project }) => {
           </TouchableOpacity>
         </View>
       </View>
-      {/* <Picker style={tw`bg-gray-200 text-gray-900 rounded-b-lg`}>
-        <Picker.Item label="No Status" value="noStatus" />
-        <Picker.Item label="Complete" value="complete" />
-        <Picker.Item label="Pending" value="pending" />
-      </Picker> */}
+
       <Modal
         animationType="slide"
         transparent={true}
@@ -141,6 +149,8 @@ const CreatedProject = ({ title, img, id, project }) => {
                       style={tw`bg-green-500 px-3 py-1 rounded`}
                       onPress={() => {
                         console.log("Thêm người dùng:", user.name);
+                        setSelectedUser(user);
+                        setRoleModalVisible(true);
                         // Viết thêm logic thêm user vào project tại đây nếu cần
                       }}
                     >
@@ -156,13 +166,13 @@ const CreatedProject = ({ title, img, id, project }) => {
 
             <View style={tw`mb-4`}>
               <Text style={tw`text-base font-semibold mb-1`}>Editors:</Text>
-              {project?.editors?.map((e, index) => (
+              {projectData?.editors?.map((e, index) => (
                 <View key={index} style={tw`w-1/2 p-2`}>
                   <Text>{e.name}</Text>
                 </View>
               ))}
               <Text style={tw`text-base font-semibold mb-1`}>Viewers:</Text>
-              {project?.viewers?.map((e, index) => (
+              {projectData?.viewers?.map((e, index) => (
                 <View key={index} style={tw`w-1/2 p-2`}>
                   <Text>{e.name}</Text>
                 </View>
@@ -174,6 +184,69 @@ const CreatedProject = ({ title, img, id, project }) => {
               onPress={() => setUserModalVisible(false)}
             >
               <Text style={tw`text-white text-center`}>Đóng</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+      <Modal
+        transparent={true}
+        visible={isRoleModalVisible}
+        animationType="fade"
+        onRequestClose={() => setRoleModalVisible(false)}
+      >
+        <View
+          style={tw`flex-1 justify-center items-center bg-black bg-opacity-50`}
+        >
+          <View style={tw`bg-white rounded-lg p-5 w-10/12`}>
+            <Text style={tw`text-lg font-bold mb-4 text-center`}>
+              Chọn quyền cho người dùng: {selectedUser?.name}
+            </Text>
+
+            <TouchableOpacity
+              style={tw`bg-blue-500 px-4 py-2 rounded mb-2`}
+              onPress={async () => {
+                try {
+                  await handleAddEditor(project._id, selectedUser._id);
+                  alert("✅ Đã thêm quyền Editor");
+                  setProjectData((prev) => ({
+                    ...prev,
+                    editors: [...prev.editors, selectedUser],
+                  }));
+                } catch (e) {
+                  alert("❌ Lỗi khi thêm quyền");
+                } finally {
+                  setRoleModalVisible(false);
+                }
+              }}
+            >
+              <Text style={tw`text-white text-center`}>Editor</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={tw`bg-green-500 px-4 py-2 rounded mb-2`}
+              onPress={async () => {
+                try {
+                  await handleAddViewer(project._id, selectedUser._id);
+                  alert("✅ Đã thêm quyền Viewer");
+                  setProjectData((prev) => ({
+                    ...prev,
+                    viewers: [...prev.viewers, selectedUser],
+                  }));
+                } catch (e) {
+                  alert("❌ Lỗi khi thêm quyền");
+                } finally {
+                  setRoleModalVisible(false);
+                }
+              }}
+            >
+              <Text style={tw`text-white text-center`}>Viewer</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => setRoleModalVisible(false)}
+              style={tw`mt-2`}
+            >
+              <Text style={tw`text-center text-red-500`}>Huỷ</Text>
             </TouchableOpacity>
           </View>
         </View>

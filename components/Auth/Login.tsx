@@ -1,9 +1,10 @@
 import { useState, useContext, useEffect } from "react";
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
 import { Svg, Path } from "react-native-svg";
 import tw from "tailwind-react-native-classnames";
 import { useRouter } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useUser } from "@/context/UserContext";
 
 import { loginUser } from "../../services/AuthService"; // Adjust the import path as necessary
 
@@ -11,6 +12,7 @@ export default function LoginScreen({ token }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
+  // const { login } = useUser(); // từ context, để cập nhật token sau khi login
 
   // const { setUserId } = useContext(UserContext);
 
@@ -33,16 +35,27 @@ export default function LoginScreen({ token }) {
   };
 
   const handleLogin = async () => {
+    // Kiểm tra không để trống
+    if (!email || !password) {
+      Alert.alert("Lỗi đăng nhập", "Vui lòng nhập đầy đủ email và mật khẩu.");
+      return;
+    }
+
     console.log("Login:", { email, password });
     const response = await loginUser(email, password);
     console.log(response);
 
-    if (response) {
+    if (response.success) {
       const { id, token } = response.user;
       saveId(id);
       saveToken(token);
+      // login(token);
+      Alert.alert("Thông báo!", "Đăng nhập thành công!r");
       console.log("Login successful:", response);
       router.push("/home");
+    } else {
+      // Dựa vào message từ backend để hiện thông báo chính xác
+      Alert.alert("Lỗi đăng nhập", "Email hoặc mật không không đúng");
     }
   };
 

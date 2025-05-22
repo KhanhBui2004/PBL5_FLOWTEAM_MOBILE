@@ -15,10 +15,10 @@ export default function RootLayout() {
         name="trash"
         options={{ title: "Thùng rác", headerShown: false }}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name="setting"
         options={{ title: "Cài đặt", headerShown: false }}
-      />
+      /> */}
       <Stack.Screen name="user" options={{ title: "Profile" }} />
       <Stack.Screen name="flow" options={{ title: "Flow" }} />
     </Stack>

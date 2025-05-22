@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
 import tw from "tailwind-react-native-classnames";
 import { useRouter } from "expo-router";
 import { registerUser } from "@/services/AuthService";
@@ -12,10 +12,37 @@ const RegisterScreen = () => {
   const [rePassword, setRePassword] = useState("");
 
   const handleRegister = async () => {
+    if (!username || !email || !password) {
+      Alert.alert("Thông báo!", "Vui lòng điền đầy đủ thông tin.");
+      return;
+    }
+
+    // Kiểm tra email hợp lệ bằng regex đơn giản
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      Alert.alert("Thông báo!", "Email không hợp lệ.");
+      return;
+    }
+
+    // Kiểm tra độ dài mật khẩu
+    if (password.length < 6) {
+      Alert.alert("Thông báo!", "Mật khẩu phải có ít nhất 6 ký tự.");
+      return;
+    }
+
+    // Kiểm tra xác nhận mật khẩu
+    if (password !== rePassword) {
+      Alert.alert("Thông báo!", "Mật khẩu nhập lại không khớp.");
+      return;
+    }
     console.log("Register:", { username, email, password });
     const response = await registerUser(username, email, password);
     if (response) {
       console.log("Register successful:", response);
+      Alert.alert(
+        "Thông báo!",
+        "Đăng ký thành công! vui lòng đăng nhập để truy cập."
+      );
       router.push("/login");
     }
   };

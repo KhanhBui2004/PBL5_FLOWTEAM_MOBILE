@@ -120,12 +120,12 @@ export default function DocNavbar() {
                 <FontAwesome name="user" size={15} color="#000" />
                 <Text style={tw`text-gray-800 mx-2`}>Profile</Text>
               </TouchableOpacity>
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 style={tw`flex flex-row justify-first items-center py-2 border-b border-gray-300`}
               >
                 <FontAwesome name="cog" size={15} color="#000" />
                 <Text style={tw`text-gray-800 mx-2`}>Settings</Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
               <TouchableOpacity
                 style={tw`flex flex-row justify-first items-center py-2`}
                 onPress={() => {

@@ -1,5 +1,6 @@
 import axios from "axios";
 import API from "../config/axios";
+import { BACKEND_URL } from "@/config";
 
 export const loginUser = async (email, password) => {
   try {
@@ -260,17 +261,32 @@ export const searchUser = async (data) => {
     console.error("Lỗi khi upload:", err);
     throw err;
   }
-  // const token = localStorage.getItem("jwt"); // Lấy token từ localStorage
-  // if (!token) {
-  //   return Promise.reject(new Error("Token not found"));
-  // }
+};
 
-  // return axios.get(`http://:8000/api/users/search?data=${data}`, {
-  //   headers: {
-  //     Authorization: `Bearer ${token}`,  // ⚡ Gửi token trong header
-  //     "Cache-Control": "no-cache",
-  //     Pragma: "no-cache",
-  //     Expires: "0"
-  //   }
-  // });
+// export const handleAddEditor = async (projectId, userId) => {
+//   return axios.put(`${BACKEND_URL}/api/projects/editor/${projectId}/${userId}`);
+// };
+
+// export const handleAddViewer = async (projectId, userId) => {
+//   return axios.put(`${BACKEND_URL}/api/projects/viewer/${projectId}/${userId}`);
+// };
+
+export const handleAddEditor = async (projectId, userId) => {
+  try {
+    const response = await API.put(`/projects/editor/${projectId}/${userId}`);
+    return response.data;
+  } catch (err) {
+    console.error("lỗi khi thêm quyền: ", err);
+    throw err;
+  }
+};
+
+export const handleAddViewer = async (projectId, userId) => {
+  try {
+    const response = await API.put(`/projects/viewer/${projectId}/${userId}`);
+    return response.data;
+  } catch (err) {
+    console.error("lỗi khi thêm quyền: ", err);
+    throw err;
+  }
 };
