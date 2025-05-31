@@ -12,7 +12,7 @@ export default function LoginScreen({ token }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
-  // const { login } = useUser(); // từ context, để cập nhật token sau khi login
+  const { login } = useUser(); // từ context, để cập nhật token sau khi login
 
   // const { setUserId } = useContext(UserContext);
 
@@ -49,8 +49,8 @@ export default function LoginScreen({ token }) {
       const { id, token } = response.user;
       saveId(id);
       saveToken(token);
-      // login(token);
-      Alert.alert("Thông báo!", "Đăng nhập thành công!r");
+      login(token);
+      Alert.alert("Thông báo!", "Đăng nhập thành công!");
       console.log("Login successful:", response);
       router.push("/home");
     } else {

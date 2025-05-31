@@ -290,3 +290,22 @@ export const handleAddViewer = async (projectId, userId) => {
     throw err;
   }
 };
+
+export const trashProject = (owner, projectId) => {
+  return API.delete(`/projects/trash/${projectId}`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    data: { owner },
+  });
+};
+
+export const deleteProject = async (projectId) => {
+  try {
+    const response = await API.delete(`/${projectId}`);
+    return response.data;
+  } catch (error) {
+    console.error("Lỗi khi xóa project: ", err);
+    throw err;
+  }
+};

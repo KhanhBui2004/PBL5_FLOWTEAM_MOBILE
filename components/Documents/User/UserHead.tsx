@@ -7,6 +7,7 @@ import { getUser, uploadImage } from "@/services/AuthService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as ImagePicker from "expo-image-picker";
 import { Alert } from "react-native";
+import { IP } from "@/config";
 
 const User = ({ onSendData, user }) => {
   const [localUser, setLocalUser] = useState(user);
@@ -56,7 +57,7 @@ const User = ({ onSendData, user }) => {
         {localUser && localUser.avatar ? (
           <Image
             source={{
-              uri: "http://192.168.110.2:8000/imgs/avatars/" + localUser.avatar,
+              uri: `${IP}:8000/imgs/avatars/` + localUser.avatar,
             }}
             style={styles.avatar}
             resizeMode="cover"
@@ -66,10 +67,10 @@ const User = ({ onSendData, user }) => {
         )}
 
         {/* Lớp phủ khi hover trên web (không hỗ trợ trên React Native, thay bằng TouchableOpacity) */}
-        <TouchableOpacity style={styles.overlay}>
+        <View style={styles.overlay}>
           <Icon name="camera" size={27} color="#fff" style={styles.icon} />
           <Text style={styles.uploadText}>Upload</Text>
-        </TouchableOpacity>
+        </View>
       </TouchableOpacity>
       {user ? (
         <View style={{ margin: 20, width: 250 }}>

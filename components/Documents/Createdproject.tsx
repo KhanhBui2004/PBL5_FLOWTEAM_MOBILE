@@ -6,6 +6,7 @@ import {
   Image,
   Modal,
   TextInput,
+  Alert,
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import tw from "tailwind-react-native-classnames";
@@ -16,7 +17,9 @@ import {
   searchUser,
   handleAddEditor,
   handleAddViewer,
+  trashProject,
 } from "@/services/AuthService";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const CreatedProject = ({ title, img, id, project }) => {
   const [userSearch, setUserSearch] = useState([]);
@@ -58,9 +61,46 @@ const CreatedProject = ({ title, img, id, project }) => {
     }
   };
 
+  const getId = async () => {
+    try {
+      const id = await AsyncStorage.getItem("userId");
+      return id;
+    } catch (e) {
+      console.error("Lỗi khi lấy token:", e);
+      return null;
+    }
+  };
+
   const handleUserPress = () => {
     setUserModalVisible(true);
-    console.log(project);
+  };
+
+  const handleDeleteToTrash = () => {
+    Alert.alert(
+      "Xác nhận xóa",
+      "Bạn có chắc chắn muốn đưa dự án vào thùng rác?",
+      [
+        {
+          text: "Hủy",
+          style: "cancel",
+        },
+        {
+          text: "Xác nhận",
+          onPress: async () => {
+            try {
+              let userid = getId();
+              await trashProject(userid, project._id);
+              Alert.alert("Thông báo", "Đã thêm vào thùng rác!");
+            } catch (error) {
+              console.error("Lỗi khi xóa dự án:", error);
+              Alert.alert("Lỗi", "Không thể thêm vào thùng rác.");
+            }
+          },
+          style: "destructive", // màu đỏ trên iOS
+        },
+      ],
+      { cancelable: true }
+    );
   };
 
   useEffect(() => {
@@ -94,8 +134,8 @@ const CreatedProject = ({ title, img, id, project }) => {
               onPress={handleUserPress}
             />
           </TouchableOpacity>
-          <TouchableOpacity>
-            <FontAwesome name="ellipsis-v" size={20} color="black" />
+          <TouchableOpacity onPress={handleDeleteToTrash}>
+            <FontAwesome name="trash" size={20} color="black" />
           </TouchableOpacity>
         </View>
       </View>
