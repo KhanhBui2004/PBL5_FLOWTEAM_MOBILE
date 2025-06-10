@@ -40,6 +40,8 @@ const Trash = ({ subtitle, empty }) => {
                 id={e._id}
                 title={e.name}
                 img={`${IP}:8000/imgs/projectImgs/` + e.img}
+                project={e}
+                istrash={true}
               />
             </View>
           ))

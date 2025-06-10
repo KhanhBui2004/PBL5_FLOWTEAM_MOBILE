@@ -49,7 +49,7 @@ export default function LoginScreen({ token }) {
       const { id, token } = response.user;
       saveId(id);
       saveToken(token);
-      login(token);
+      // login(token);
       Alert.alert("Thông báo!", "Đăng nhập thành công!");
       console.log("Login successful:", response);
       router.push("/home");
@@ -59,11 +59,11 @@ export default function LoginScreen({ token }) {
     }
   };
 
-  useEffect(() => {
-    if (token) {
-      router.push("/home");
-    }
-  }, [token]);
+  // useEffect(() => {
+  //   if (token) {
+  //     router.push("/home");
+  //   }
+  // }, [token]);
 
   return (
     <View style={tw`flex-1 justify-center items-center bg-gray-100 px-4`}>

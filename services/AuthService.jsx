@@ -291,21 +291,27 @@ export const handleAddViewer = async (projectId, userId) => {
   }
 };
 
-export const trashProject = (owner, projectId) => {
-  return API.delete(`/projects/trash/${projectId}`, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-    data: { owner },
-  });
-};
-
-export const deleteProject = async (projectId) => {
+export const trashProject = async (owner, projectId) => {
   try {
-    const response = await API.delete(`/${projectId}`);
-    return response.data;
-  } catch (error) {
-    console.error("Lỗi khi xóa project: ", err);
+    const response = await API.delete(`/projects/trash/${projectId}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: { owner },
+    });
+    return response;
+  } catch (err) {
+    console.error("Lỗi khi thêm project vào thùng rác: ", err);
     throw err;
   }
+};
+
+export const deleteProject = (projectId) => {
+  return API.delete(`/api/projects/${projectId}`, {
+    headers: {
+      "Cache-Control": "no-cache",
+      Pragma: "no-cache",
+      Expires: "0",
+    },
+  });
 };

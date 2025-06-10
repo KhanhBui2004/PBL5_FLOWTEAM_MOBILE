@@ -12,11 +12,16 @@ import { useState } from "react";
 import { FontAwesome } from "@expo/vector-icons";
 import { router, useRouter } from "expo-router";
 import { useUser } from "@/context/UserContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function DocNavbar() {
-  const { token, logout } = useUser();
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const logout = () => {
+    AsyncStorage.removeItem("userToken");
+    AsyncStorage.removeItem("userId");
+    router.push("/login");
+  };
 
   return (
     <>

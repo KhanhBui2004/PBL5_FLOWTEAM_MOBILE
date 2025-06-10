@@ -18,10 +18,18 @@ import {
   handleAddEditor,
   handleAddViewer,
   trashProject,
+  deleteProject,
 } from "@/services/AuthService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const CreatedProject = ({ title, img, id, project }) => {
+const CreatedProject = ({
+  title,
+  img,
+  id,
+  project,
+  ismydoc = false,
+  istrash = false,
+}) => {
   const [userSearch, setUserSearch] = useState([]);
   const [isUserModalVisible, setUserModalVisible] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -89,11 +97,42 @@ const CreatedProject = ({ title, img, id, project }) => {
           onPress: async () => {
             try {
               let userid = getId();
-              await trashProject(userid, project._id);
-              Alert.alert("Thông báo", "Đã thêm vào thùng rác!");
+              let response = await trashProject(userid, project._id);
+              if (response.status === 200)
+                Alert.alert("Thông báo", "Đã thêm vào thùng rác!");
+              else Alert.alert("Thông báo", "Lỗi");
             } catch (error) {
               console.error("Lỗi khi xóa dự án:", error);
               Alert.alert("Lỗi", "Không thể thêm vào thùng rác.");
+            }
+          },
+          style: "destructive", // màu đỏ trên iOS
+        },
+      ],
+      { cancelable: true }
+    );
+  };
+
+  const handleDeleteProject = () => {
+    Alert.alert(
+      "Thông báo",
+      "Bạn có chắc chắn muốn xóa dự án này?",
+      [
+        {
+          text: "Hủy",
+          style: "cancel",
+        },
+        {
+          text: "Xác nhận",
+          onPress: async () => {
+            try {
+              let response = await deleteProject(id);
+              if (response.status === 200)
+                Alert.alert("Thông báo", "Đã xóa project!");
+              else Alert.alert("Thông báo", "Lỗi");
+            } catch (error) {
+              console.error("Lỗi khi xóa dự án:", error);
+              Alert.alert("Lỗi", "Không thể xóa project!");
             }
           },
           style: "destructive", // màu đỏ trên iOS
@@ -134,9 +173,16 @@ const CreatedProject = ({ title, img, id, project }) => {
               onPress={handleUserPress}
             />
           </TouchableOpacity>
-          <TouchableOpacity onPress={handleDeleteToTrash}>
-            <FontAwesome name="trash" size={20} color="black" />
-          </TouchableOpacity>
+          {ismydoc && (
+            <TouchableOpacity onPress={handleDeleteToTrash}>
+              <FontAwesome name="trash" size={20} color="black" />
+            </TouchableOpacity>
+          )}
+          {istrash && (
+            <TouchableOpacity onPress={handleDeleteProject}>
+              <FontAwesome name="trash" size={20} color="red" />
+            </TouchableOpacity>
+          )}
         </View>
       </View>
 

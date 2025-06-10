@@ -45,6 +45,7 @@ const MyDoc = ({ subtitle, empty }) => {
                 title={e.name}
                 img={`${IP}:8000/imgs/projectImgs/` + e.img}
                 project={e}
+                ismydoc={true}
               />
             </View>
           ))

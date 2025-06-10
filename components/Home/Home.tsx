@@ -17,10 +17,27 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useUser } from "@/context/UserContext";
 
 export default function Home() {
-  const { token, logout } = useUser();
+  const [token, setToken] = useState("");
+
+  const getToken = async () => {
+    try {
+      const token = await AsyncStorage.getItem("userToken");
+      setToken(token || "");
+    } catch (error) {
+      console.error("Error reading token:", error);
+    }
+  };
+
   useEffect(() => {
-    console.log("Token:");
-  }, [token]);
+    getToken();
+  }, []);
+
+  const logout = () => {
+    AsyncStorage.removeItem("userToken");
+    AsyncStorage.removeItem("userId");
+    setToken("");
+    router.push("/login");
+  };
 
   const player = useVideoPlayer(
     "https://corporate-assets.lucid.co/chart/080af32f-35fa-4f39-b788-e90ea8100501.mp4",
@@ -129,7 +146,7 @@ export default function Home() {
           resizeMode="contain"
         />
         <View style={tw`flex-1 flex-row justify-end items-center`}>
-          {token ? (
+          {token !== "" ? (
             <>
               <TouchableOpacity
                 style={tw`mx-2 px-4 py-2 bg-blue-600 rounded-lg flex-row items-center`}
@@ -141,7 +158,6 @@ export default function Home() {
               <TouchableOpacity
                 style={tw`px-4 py-2 bg-blue-600 rounded-lg flex-row items-center`}
                 onPress={async () => {
-                  console.log("Logout clicked");
                   logout();
                 }}
               >
